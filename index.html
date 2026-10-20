@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aisyah Fajrin M. · Portfolio 2026</title>
+<meta name="description" content="Portfolio of Aisyah Fajrin Muthmainnah: marketing communication, campaigns, Instagram content and dashboards.">
+<style>
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:100 900;font-display:swap;src:url(fonts/fraunces-latin-standard-normal.woff2) format("woff2")}
+@font-face{font-family:"Fraunces";font-style:italic;font-weight:100 900;font-display:swap;src:url(fonts/fraunces-latin-standard-italic.woff2) format("woff2")}
+@font-face{font-family:"Plus Jakarta Sans";font-style:normal;font-weight:200 800;font-display:swap;src:url(fonts/plus-jakarta-sans-latin-wght-normal.woff2) format("woff2")}
+@font-face{font-family:"Caveat";font-weight:500;font-display:swap;src:url(fonts/caveat-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Caveat";font-weight:600;font-display:swap;src:url(fonts/caveat-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Caveat";font-weight:700;font-display:swap;src:url(fonts/caveat-latin-700-normal.woff2) format("woff2")}
+</style>
+<style>
+:root{
+  --paper:#F4EFE5; --paper-2:#EAE2D3; --card:#FFFDF8;
+  --ink:#1B1A18; --muted:#6A6155; --line:rgba(27,26,24,.14);
+  --accent:#A8792A; --accent-ink:#83601F; --accent-soft:#F0E3C6;
+  --navy:#25358A; --sky:#D7E4F6; --butter:#F3D67A; --sage:#CFDCCB;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --sans:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
+  --hand:"Caveat","Comic Sans MS",cursive;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:#2A2824;font-family:var(--sans);color:var(--ink);overflow:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ---------- stage ---------- */
+#viewport{position:fixed;inset:0}
+#deck{position:absolute;left:50%;top:calc(50% - 26px);width:1600px;height:900px;transform-origin:center center;transform:translate(-50%,-50%)}
+.slide{position:absolute;inset:0;width:1600px;height:900px;background:var(--paper);overflow:hidden;
+  opacity:0;visibility:hidden;transition:opacity .45s ease, visibility .45s;padding:64px 88px 70px}
+.slide.on{opacity:1;visibility:visible}
+.slide::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .4 0 0 0 0 .33 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.slide > *{position:relative}
+
+/* folio line, like a magazine page header */
+.folio{position:absolute;left:88px;right:88px;top:30px;display:flex;justify-content:space-between;align-items:center;
+  font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.folio::after{content:"";position:absolute;left:0;right:0;bottom:-10px;border-bottom:1px solid var(--line)}
+.folio b{color:var(--ink);font-weight:700}
+.pno{position:absolute;right:88px;bottom:28px;font-family:var(--serif);font-style:italic;font-size:18px;color:var(--muted)}
+.foot{position:absolute;left:88px;bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.04em}
+
+/* type */
+.kicker{font-size:13px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--accent-ink)}
+h1,h2,h3{font-family:var(--serif);font-weight:500;margin:0;letter-spacing:-.015em}
+h2{font-size:68px;line-height:1}
+h2 em,h1 em{font-style:italic;font-weight:400;color:var(--accent)}
+h3{font-size:34px;line-height:1.08}
+p{margin:0;font-size:19px;line-height:1.55}
+.muted{color:var(--muted)}
+.hand{font-family:var(--hand);color:var(--accent);font-size:30px;line-height:1.05;font-weight:600}
+.hand.ink{color:var(--navy)}
+.lab{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:8px}
+ul.did{margin:0;padding:0;list-style:none;display:grid;gap:9px}
+ul.did li{font-size:17px;line-height:1.45;padding-left:22px;position:relative}
+ul.did li::before{content:"";position:absolute;left:0;top:.62em;width:11px;height:2px;background:var(--accent)}
+
+/* stickers, tape, photos */
+.sticker{display:inline-block;padding:7px 16px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.04em;
+  background:var(--butter);color:var(--ink);transform:rotate(-4deg);box-shadow:0 2px 0 rgba(0,0,0,.12)}
+.sticker.blue{background:var(--navy);color:#fff}
+.sticker.red{background:var(--accent);color:#fff}
+.sticker.sage{background:var(--sage)}
+.photo{position:absolute;background:#fff;padding:10px;box-shadow:0 18px 40px -18px rgba(40,30,15,.45),0 2px 6px rgba(40,30,15,.12)}
+.photo img{display:block;width:100%;height:auto}
+.tape::after{content:"";position:absolute;top:-14px;left:50%;width:110px;height:30px;margin-left:-55px;background:rgba(243,214,122,.72);
+  transform:rotate(-3deg);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.arrow{position:absolute;pointer-events:none}
+.arrow path{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.arrow.ink path{stroke:var(--navy)}
+
+/* stats */
+.big{font-family:var(--serif);font-weight:500;font-size:64px;line-height:.95;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.big small{font-size:.5em;color:var(--muted)}
+.res{display:flex;gap:34px;border-top:1.5px solid var(--ink);padding-top:16px}
+.res div{min-width:0}
+.res .big{font-size:52px}
+.res span{display:block;font-size:14.5px;color:var(--muted);margin-top:6px;max-width:18ch;line-height:1.35}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:999px;background:var(--ink);color:var(--paper);
+  text-decoration:none;font-weight:700;font-size:15px;border:0;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn svg{width:16px;height:16px}
+.bigbtn .btn{font-size:19px;padding:15px 26px}
+
+/* ---------- controls ---------- */
+#ui{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:14px;padding:12px 18px;z-index:20;
+  color:#EDE6D8;font-size:13px;pointer-events:none}
+#ui > *{pointer-events:auto}
+#ui button{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#EDE6D8;width:38px;height:38px;border-radius:50%;
+  cursor:pointer;display:grid;place-items:center}
+#ui button:hover{background:rgba(255,255,255,.2)}
+#ui svg{width:18px;height:18px}
+#bar{flex:1;height:3px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden}
+#bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .35s}
+#count{font-variant-numeric:tabular-nums;min-width:56px;text-align:right}
+#hint{position:fixed;top:14px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);color:#fff;font-size:13px;padding:8px 14px;border-radius:999px;
+  z-index:21;transition:opacity .6s}
+
+/* scroll mode (phones in portrait) */
+body.scroll{overflow:auto}
+body.scroll #viewport{position:static;display:block}
+body.scroll #deck{position:static;transform:none!important;width:100%;height:auto}
+body.scroll .sw{position:relative;overflow:hidden;margin:0 0 10px}
+body.scroll .slide{opacity:1;visibility:visible;transform-origin:0 0;position:absolute;left:0;top:0}
+body.scroll #ui,body.scroll #hint{display:none}
+
+/* print mode */
+body.print{background:var(--paper);overflow:visible}
+body.print #viewport{position:static;display:block}
+body.print #deck{position:static;transform:none!important;width:1600px;height:auto}
+body.print .slide{position:relative;opacity:1;visibility:visible;page-break-after:always;break-after:page;transition:none}
+body.print #ui,body.print #hint,body.print .noprint{display:none!important}
+body.print .slide::before{display:none}
+body.print .photo,body.print .browser,body.print .phone,body.print .strip .mini,body.print .car img,body.print .sticker{box-shadow:0 0 0 1px rgba(40,30,15,.12)!important}
+body:not(.print) .printonly{display:none!important}
+@page{size:1600px 900px;margin:0}
+
+/* ---------- specific layouts ---------- */
+/* cover */
+.cover .mast{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px double var(--ink);padding-bottom:12px;margin-top:-6px}
+.cover .mast .t{font-family:var(--serif);font-style:italic;font-size:30px}
+.cover .mast .m{font-size:13px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
+.cover h1{font-size:176px;line-height:.86;margin-top:70px;font-weight:600;letter-spacing:-.035em}
+.cover h1 em{font-weight:300}
+.cover .role{margin-top:34px;font-size:22px;max-width:30ch;line-height:1.45}
+.cover .tags{margin-top:28px;display:flex;gap:10px;flex-wrap:wrap;max-width:700px}
+.chip{border:1.5px solid var(--ink);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:600}
+
+/* contents */
+.toc{list-style:none;margin:0;padding:0;border-top:1.5px solid var(--ink)}
+.toc li{border-bottom:1px solid var(--line)}
+.toc a{display:grid;grid-template-columns:70px 1fr auto;align-items:baseline;gap:20px;padding:15px 0;text-decoration:none;cursor:pointer}
+.toc a:hover .tt{color:var(--accent)}
+.toc .nn{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--accent)}
+.toc .tt{font-family:var(--serif);font-size:36px;letter-spacing:-.01em;transition:color .2s}
+.toc .tt small{font-family:var(--sans);font-size:15px;color:var(--muted);margin-left:14px;letter-spacing:0}
+.toc .pg{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* section openers */
+.opener{background:var(--ink);color:var(--paper)}
+.opener::before{opacity:.25}
+.opener .kicker{color:#C9A45C}
+.opener .folio{color:rgba(244,239,229,.6)} .opener .folio b{color:var(--paper)} .opener .folio::after{border-color:rgba(244,239,229,.2)}
+.opener .pno{color:rgba(244,239,229,.6)}
+.opener .num{font-family:var(--serif);font-size:420px;line-height:.8;font-weight:300;font-style:italic;color:#C9A45C;position:absolute;right:70px;bottom:40px;letter-spacing:-.04em}
+.opener h2{font-size:120px;margin-top:210px;line-height:.92}
+.opener p{max-width:40ch;margin-top:28px;color:rgba(244,239,229,.78);font-size:22px}
+
+/* phone */
+.phone{position:absolute;width:318px;height:650px;border-radius:46px;background:#141414;padding:12px;box-shadow:0 30px 60px -25px rgba(0,0,0,.55),inset 0 0 0 2px #333}
+.phone .scr{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;background:#fff}
+.phone .notch{position:absolute;top:10px;left:50%;width:90px;height:24px;margin-left:-45px;background:#141414;border-radius:20px;z-index:5}
+.phone .scroller{position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding-top:34px}
+.phone .scroller::-webkit-scrollbar{display:none}
+.phone .scroller img{display:block;width:100%}
+
+/* wrapped story cards (base 300x533) */
+.wcard{position:relative;width:300px;height:533px;overflow:hidden;border-radius:18px;font-family:var(--sans);padding:46px 24px 26px;display:flex;flex-direction:column}
+.wcard.red{background:#C8102E;color:#fff}
+.wcard.cream{background:#FFF6EA;color:#2A0C10}
+.wcard.navy{background:#1C2A6B;color:#fff}
+.wcard .wk{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;opacity:.75}
+.wcard .wt{font-weight:800;font-size:30px;line-height:1.08;margin-top:12px;letter-spacing:-.02em}
+.wcard .wp{font-size:14px;line-height:1.45;margin-top:12px;opacity:.9}
+.wcard .wn{font-family:var(--serif);font-weight:600;font-size:150px;line-height:.85;letter-spacing:-.05em;margin-top:30px}
+.wcard .wfoot{margin-top:auto;font-size:12px;opacity:.75;font-weight:600}
+.wcard .opt{display:block;width:100%;text-align:left;margin-top:10px;padding:12px 14px;border-radius:12px;border:1.5px solid currentColor;background:transparent;color:inherit;font-weight:700;font-size:16px}
+.wcard .opt.right{background:#fff;color:#C8102E;border-color:#fff}
+.wcard .poles{display:flex;gap:10px;height:210px;margin-top:26px}
+.wcard .pole{flex:1;position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
+.wcard .pole .stick{width:3px;background:#2A0C10;height:100%;position:absolute;left:50%;bottom:22px;top:0}
+.wcard .pole .flag{position:absolute;left:50%;width:34px;height:22px;background:linear-gradient(#C8102E 50%,#fff 50%);border:1px solid rgba(0,0,0,.2)}
+.wcard .pole .tgt{position:absolute;left:4%;right:4%;border-top:2px dashed #C8102E}
+.wcard .pole .nm{font-size:10.5px;font-weight:700;text-align:center;line-height:1.15;position:relative;height:22px}
+.wcard .pole .ct{position:absolute;font-size:11px;font-weight:800;left:50%;transform:translateX(4px)}
+.wcard .svc{margin-top:22px;display:grid;gap:14px}
+.wcard .svc div{display:grid;gap:5px}
+.wcard .svc b{font-size:14px} .wcard .svc i{display:block;height:14px;background:#fff;border-radius:7px}
+.wcard .svc span{font-size:12px;opacity:.85}
+.wcard .fix{margin-top:20px;background:rgba(255,255,255,.12);border-radius:14px;padding:14px}
+.wcard .fix b{display:block;font-size:16px;line-height:1.3}
+.wcard .fix p{font-size:13px;margin-top:8px;color:inherit;opacity:.9;line-height:1.45}
+
+.wstory{position:absolute;inset:0;background:#000}
+.wstory .wcard{position:absolute;inset:0;width:100%;height:100%;border-radius:0;opacity:0;transition:opacity .35s;padding-top:66px}
+.wstory .wcard.on{opacity:1}
+.wstory .prog{position:absolute;top:44px;left:14px;right:14px;display:flex;gap:4px;z-index:4}
+.wstory .prog span{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.35);overflow:hidden}
+.wstory .prog span.done{background:rgba(255,255,255,.95)}
+.wstory .prog.dark span{background:rgba(42,12,16,.25)} .wstory .prog.dark span.done{background:#2A0C10}
+.wstory .tapL,.wstory .tapR{position:absolute;top:0;bottom:0;z-index:3;cursor:pointer;background:transparent;border:0}
+.wstory .tapL{left:0;width:35%} .wstory .tapR{right:0;width:65%}
+.wstory .wcard .opt{position:relative;z-index:5;cursor:pointer}
+
+.strip{display:flex;gap:12px;margin-top:40px}
+.strip .cell{width:146px}
+.strip .mini{width:146px;height:259.4px;overflow:hidden;border-radius:10px;box-shadow:0 12px 26px -14px rgba(0,0,0,.45)}
+.strip .mini .wcard{transform:scale(.4867);transform-origin:0 0}
+.strip .cap{font-family:var(--hand);color:var(--navy);font-size:21px;line-height:1.05;margin-top:10px;font-weight:600}
+
+/* carousel strips */
+.car{display:flex;gap:12px}
+.car img{display:block;border-radius:6px;box-shadow:0 10px 22px -14px rgba(0,0,0,.5);cursor:zoom-in;background:#fff}
+.car figure{margin:0}
+.car figcaption{font-family:var(--hand);color:var(--navy);font-size:20px;line-height:1.05;margin-top:8px;font-weight:600}
+
+/* insights */
+.ins{display:grid;gap:12px}
+.hbar{display:grid;grid-template-columns:72px 1fr 54px;align-items:center;gap:12px;font-size:15px}
+.hbar i{display:block;height:12px;background:var(--paper-2);border-radius:6px;overflow:hidden}
+.hbar i b{display:block;height:100%;background:var(--navy);border-radius:6px}
+.hbar .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+
+/* dashboards */
+.dash{position:absolute;width:640px}
+.dash .browser{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 26px 50px -24px rgba(30,20,10,.5),0 0 0 1px var(--line)}
+.dash .browser .bar{height:30px;background:var(--paper-2);display:flex;align-items:center;gap:6px;padding:0 12px}
+.dash .browser .bar i{width:10px;height:10px;border-radius:50%;background:#D7CDBB}
+.dash .browser img{display:block;width:100%;cursor:zoom-in}
+.dash h3{font-size:30px;margin-top:22px}
+.dash p{font-size:16px;margin-top:8px;color:var(--muted);max-width:52ch}
+.dash .row{display:flex;align-items:center;gap:14px;margin-top:16px}
+
+/* lightbox */
+#lb{position:fixed;inset:0;background:rgba(20,18,15,.92);z-index:50;display:none;align-items:center;justify-content:center;gap:16px}
+#lb.on{display:flex}
+#lb img{max-width:min(92vw,900px);max-height:86vh;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#lb button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;width:46px;height:46px;border-radius:50%;cursor:pointer;font-size:20px}
+#lb .x{position:absolute;top:18px;right:18px}
+#lb .c{position:absolute;bottom:18px;left:0;right:0;text-align:center;color:#ddd;font-size:14px}
+</style>
+</head>
+<body>
+<div id="hint" class="noprint">Use ← → keys, swipe, or the arrows below</div>
+<div id="viewport"><div id="deck">
+
+<!-- ============ 1 COVER ============ -->
+<section class="slide cover" data-title="Cover">
+  <div class="mast"><span class="t">The Portfolio</span><span class="m">Issue 01 · October 2026 · Jakarta</span></div>
+  <h1>Aisyah<br><em>Fajrin M.</em></h1>
+  <p class="role">Marketing Communication for healthcare: campaigns, content, events and the dashboards that keep them honest.</p>
+  <div class="tags"><span class="chip">Campaigns</span><span class="chip">Instagram content</span><span class="chip">Dashboards</span><span class="chip">Brand</span><span class="chip">Events &amp; MC</span></div>
+  <div class="photo tape" style="width:510px;right:110px;top:170px;transform:rotate(2.5deg)"><img src="assets/stage/ais-portrait.jpg" alt="Portrait of Aisyah"></div>
+  <span class="sticker red" style="position:absolute;right:560px;top:740px;transform:rotate(-8deg);font-size:20px">Hi, I’m Ais!</span>
+  <div class="hand" style="position:absolute;left:720px;top:250px;transform:rotate(-5deg);width:230px">nutritionist turned marketer</div>
+  <svg class="arrow" style="left:590px;top:285px" width="130" height="80" viewBox="0 0 130 80"><path d="M120 10 C 90 20, 60 40, 20 62"/><path d="M20 62 l 16 -2 M20 62 l 6 -14"/></svg>
+  <div class="foot">aisyfmr@gmail.com · linkedin.com/in/aisyah-fajrin-muthmainnah</div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 2 CONTENTS ============ -->
+<section class="slide" data-title="Contents">
+  <div class="folio"><span><b>Aisyah Fajrin M.</b> · Portfolio 2026</span><span>Contents</span></div>
+  <div style="display:grid;grid-template-columns:420px 1fr;gap:90px;margin-top:70px">
+    <div>
+      <div class="kicker">In this issue</div>
+      <h2 style="font-size:88px;margin-top:18px">What’s <em>inside</em></h2>
+      <p class="muted" style="margin-top:26px;max-width:30ch">Every project comes with its numbers, including the one that didn’t go to plan. Data from real campaigns is shown as counts only; dashboards use dummy data.</p>
+      <div class="hand ink" style="margin-top:44px;transform:rotate(-3deg);font-size:28px">click a chapter to jump there</div>
+    </div>
+    <ol class="toc" id="toc"></ol>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 3 ABOUT ============ -->
+<section class="slide" data-title="About">
+  <div class="folio"><span><b>Aisyah Fajrin M.</b> · Portfolio 2026</span><span>About</span></div>
+  <div style="display:grid;grid-template-columns:1fr 520px;gap:80px;margin-top:62px">
+    <div>
+      <div class="kicker">Hello</div>
+      <h2 style="margin-top:16px">Hi, I’m <em>Ais.</em></h2>
+      <p style="margin-top:26px;font-size:21px;max-width:44ch">I trained as a nutritionist and joined a Jakarta clinic network in October 2025. In twelve months I moved from nutrition coaching to operations to marketing, so I plan campaigns with the clinic floor in mind: what patients pay, what staff can explain, and what the data will show afterwards.</p>
+      <div style="margin-top:44px">
+        <div class="lab">My first twelve months</div>
+        <div style="display:flex;gap:4px;height:78px">
+          <div style="flex:3;background:var(--sage);padding:10px 14px;border-radius:10px 0 0 10px"><b style="font-size:15px">Nutritionist Experience Partner</b><div style="font-size:13px" class="muted">Oct – Dec 2025</div></div>
+          <div style="flex:6;background:var(--sky);padding:10px 14px"><b style="font-size:15px">Operations Coordinator</b><div style="font-size:13px" class="muted">Jan – Jun 2026 · also Homecare marketing</div></div>
+          <div style="flex:4;background:var(--accent);color:#fff;padding:10px 14px;border-radius:0 10px 10px 0"><b style="font-size:15px">Marketing Communication</b><div style="font-size:13px;opacity:.85">Jul 2026 – now</div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="panel" style="transform:rotate(1.2deg)">
+        <div class="lab">What I do</div>
+        <ul class="did">
+          <li>Plan promos and campaigns, from pricing rules to flyers and staff briefings</li>
+          <li>Run the clinic Instagram: content pillars, carousels, captions, insights</li>
+          <li>Build evaluation dashboards and weekly reports for the CEO</li>
+          <li>MC every health talk at our in-house clinics</li>
+        </ul>
+        <div class="lab" style="margin-top:22px">Toolkit</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span class="chip">Canva</span><span class="chip">Meta Ads</span><span class="chip">Instagram Insights</span><span class="chip">Google Sheets</span><span class="chip">Apps Script</span><span class="chip">Notion</span><span class="chip">WordPress</span><span class="chip">AI tools</span>
+        </div>
+      </div>
+      <div class="hand" style="margin-top:26px;margin-left:30px;transform:rotate(-3deg)">I like marketing that can show its homework.</div>
+    </div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 4 NUMBERS ============ -->
+<section class="slide" data-title="At a glance">
+  <div class="folio"><span><b>Aisyah Fajrin M.</b> · Portfolio 2026</span><span>At a glance</span></div>
+  <div class="kicker" style="margin-top:58px">By the numbers</div>
+  <h2 style="margin-top:14px">Four months in marketing, <em>in six numbers</em></h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:44px;border-top:1.5px solid var(--ink)">
+    <div class="stat" style="padding:26px 30px 26px 0;border-bottom:1px solid var(--line)"><div class="big">87<small> / 66</small></div><p class="muted" style="margin-top:10px">promo transactions vs target in my best campaign, Sehat Merdeka</p></div>
+    <div class="stat" style="padding:26px 30px;border-bottom:1px solid var(--line);border-left:1px solid var(--line)"><div class="big">4<small> / 4</small></div><p class="muted" style="margin-top:10px">clinics passed their own target in that campaign</p></div>
+    <div class="stat" style="padding:26px 30px;border-bottom:1px solid var(--line);border-left:1px solid var(--line)"><div class="big">423</div><p class="muted" style="margin-top:10px">views on my best-performing feed carousel (myth-busting acupuncture)</p></div>
+    <div class="stat" style="padding:26px 30px 26px 0"><div class="big">4</div><p class="muted" style="margin-top:10px">dashboards and reports built for marketing, ops and the CEO</p></div>
+    <div class="stat" style="padding:26px 30px;border-left:1px solid var(--line)"><div class="big">2</div><p class="muted" style="margin-top:10px">brand book versions from one source: internal and vendor</p></div>
+    <div class="stat" style="padding:26px 30px;border-left:1px solid var(--line)"><div class="big">MC</div><p class="muted" style="margin-top:10px">at every in-house clinic health talk, and speaker at one</p></div>
+  </div>
+  <span class="sticker red" style="position:absolute;right:120px;top:120px;transform:rotate(6deg)">Jul – Oct 2026</span>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 5 OPENER: CAMPAIGNS ============ -->
+<section class="slide opener" data-title="Campaigns" data-toc="Campaigns" data-tocsub="Sehat Merdeka, Wrapped recap, Immune Season and more">
+  <div class="folio"><span><b>Aisyah Fajrin M.</b> · Portfolio 2026</span><span>Chapter one</span></div>
+  <div class="kicker">Chapter 01</div>
+  <h2>Campaigns</h2>
+  <p>Promos for a clinic network: vitamin shots, IV drips, flu season and specialist packages. Each one planned, briefed, tracked weekly and reported back.</p>
+  <div class="num">01</div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 6 SEHAT MERDEKA ============ -->
+<section class="slide" data-title="Sehat Merdeka">
+  <div class="folio"><span><b>Campaigns</b> · Case study</span><span>Aug – Sep 2026</span></div>
+  <div class="photo tape" style="width:460px;left:80px;top:110px;transform:rotate(-3deg)"><img src="assets/flyer-sehat-merdeka.jpg" alt="Sehat Merdeka flyer"></div>
+  <span class="sticker" style="position:absolute;left:440px;top:735px;transform:rotate(-8deg);font-size:18px">132% of target</span>
+  <div style="margin-left:610px;margin-top:52px">
+    <div class="kicker">Case 01 · Independence Day promo</div>
+    <h2 style="margin-top:12px">Sehat <em>Merdeka</em></h2>
+    <p class="muted" style="margin-top:12px;max-width:52ch">Vitamin-B, stamina and mood boosters across four clinics, with a 17% discount for 17 August.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:28px">
+      <div><div class="lab">Challenge</div><p style="font-size:17px">Grow stamina and mood services, and bring more BPJS patients at the public clinic into preventive care.</p></div>
+      <div><div class="lab">What I did</div>
+        <ul class="did">
+          <li>Two-tier offer: a discount for everyone, plus an extra tier for BPJS patients</li>
+          <li>Flyers per clinic, online briefing, then an in-person roadshow</li>
+          <li>Weekly tracking against a pro-rated target</li>
+        </ul></div>
+    </div>
+    <div class="res" style="margin-top:30px">
+      <div><div class="big">87<small>/66</small></div><span>transactions vs target</span></div>
+      <div><div class="big">4<small>/4</small></div><span>clinics hit target</span></div>
+      <div><div class="big">18<small> vs 4</small></div><span>BPJS patients used preventive care</span></div>
+    </div>
+    <div class="hand ink" style="margin-top:22px;font-size:26px;max-width:46ch">Most errors came from discount input at the front desk, not from demand. Briefing the floor matters as much as the offer.</div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 7 WRAPPED (interactive phone) ============ -->
+<section class="slide" data-title="Wrapped recap">
+  <div class="folio"><span><b>Campaigns</b> · Evaluation, Wrapped edition</span><span>Oct 2026</span></div>
+  <div style="max-width:720px;margin-top:66px">
+    <div class="kicker">Case 01 · how I reported it back</div>
+    <h2 style="margin-top:12px">The final evaluation, <em>as a Wrapped story</em></h2>
+    <p style="margin-top:24px;font-size:20px;max-width:46ch">Clinic teams don’t read tables. So I turned the final report into a tap-through story they could open on their phones, like a year-in-review app.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:34px">
+      <div><div class="lab">Design choices</div><ul class="did"><li>No ranking: small targets make percentages unfair</li><li>Every clinic gets its own award</li><li>“Guess first” cards to keep people tapping</li></ul></div>
+      <div><div class="lab">What stayed in</div><ul class="did"><li>The fixes: 5 transactions without the promo discount</li><li>One clear action per fix</li><li>A thank-you to the medical team</li></ul></div>
+    </div>
+    <p class="muted" style="margin-top:28px;font-size:14px">Original in Bahasa Indonesia, built for clinic staff. Partner clinic names replaced with “Klinik Korporat A, B, C”.</p>
+  </div>
+  <div class="phone" style="right:200px;top:118px;transform:rotate(2deg)"><div class="scr"><div class="notch"></div><div class="wstory" id="wstory"></div></div></div>
+  <div class="hand noprint" style="position:absolute;right:560px;top:560px;transform:rotate(-6deg);width:200px;text-align:right">tap the phone to play it</div>
+  <svg class="arrow noprint" style="right:520px;top:600px" width="70" height="60" viewBox="0 0 70 60"><path d="M5 10 C 30 10, 50 25, 60 48"/><path d="M60 48 l -12 -4 M60 48 l 3 -13"/></svg>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 8 WRAPPED STRIP ============ -->
+<section class="slide" data-title="Wrapped, every screen">
+  <div class="folio"><span><b>Campaigns</b> · Evaluation, Wrapped edition</span><span>9 screens</span></div>
+  <div style="display:flex;justify-content:space-between;align-items:end;margin-top:56px">
+    <div><div class="kicker">Every screen</div><h2 style="margin-top:12px;font-size:58px">From “guess first” to <em>thank you</em></h2></div>
+    <span class="sticker blue" style="transform:rotate(3deg)">Sent to all 4 clinics, 1 Oct</span>
+  </div>
+  <div class="strip" id="wstrip"></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:34px;border-top:1.5px solid var(--ink);padding-top:18px">
+    <div><div class="lab">Audience</div><p style="font-size:16px">Doctors, nurses and front-desk staff at four clinics, reading on their phones between patients.</p></div>
+    <div><div class="lab">Format</div><p style="font-size:16px">Nine tap-through screens built as a web page, shared as one link in the clinic group chats.</p></div>
+    <div><div class="lab">Response</div><p style="font-size:16px">It became my standard for final recaps. The acupuncture and nutrition promo got its own Wrapped story too.</p></div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 9 IMMUNE SEASON ============ -->
+<section class="slide" data-title="Immune Season">
+  <div class="folio"><span><b>Campaigns</b> · Case study</span><span>Oct – Nov 2026 · running</span></div>
+  <div style="display:grid;grid-template-columns:1fr 470px;gap:50px;margin-top:54px">
+    <div>
+      <div class="kicker">Case 02 · flu-season bundles</div>
+      <h2 style="margin-top:12px">Immune Season: <em>the one that taught me most</em></h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:30px">
+        <div><div class="lab">Challenge</div><p style="font-size:17px">Launch a flu-season campaign on 1 October that protects margin and stays within finance’s cap on vaccine discounts.</p>
+          <div class="lab" style="margin-top:20px">What I did</div>
+          <ul class="did"><li>Timed it to the rainy-season outlook</li><li>Every bundle included the flu vaccine, one discount rate per bundle</li><li>Flyers, medical guideline, briefings, app pricing and a tracker, all before launch</li></ul></div>
+        <div><div class="lab">What happened</div><p style="font-size:17px">Redemptions came in far below plan, so I diagnosed each site instead of waiting for the end date.</p>
+          <div class="lab" style="margin-top:20px">What I found</div>
+          <ul class="did"><li>At one site, insurance covers vaccines and vitamins on their own, but not as a bundle</li><li>Elsewhere, bundle prices sat far above what patients usually spend</li></ul></div>
+      </div>
+      <div class="panel" style="margin-top:28px;background:var(--accent-soft);border-color:transparent">
+        <div class="lab" style="color:var(--accent-ink)">Turned into rules for the next promo</div>
+        <p style="font-size:18px">Check how each site pays · price close to usual spend · never force a bundle. The year-end promo is being planned with these rules.</p>
+      </div>
+    </div>
+    <div style="position:relative">
+      <div class="photo tape" style="width:460px;left:10px;top:0;transform:rotate(3deg)"><img src="assets/flyer-immune-season.jpg" alt="Immune Season flyer"></div>
+    </div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 10 TWO-UP CAMPAIGNS ============ -->
+<section class="slide" data-title="More campaigns">
+  <div class="folio"><span><b>Campaigns</b> · More cases</span><span>Jul – Dec 2026</span></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:70px;margin-top:56px">
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:28px">
+      <div class="photo" style="position:relative;transform:rotate(-3deg);height:max-content"><img src="assets/flyer-travel-immunity.jpg" alt="C+ Series Travel Emergen-C flyer"></div>
+      <div>
+        <div class="kicker">Case 03 · my first campaign</div>
+        <h3 style="margin-top:10px">C+ Series: Travel Emergen-C</h3>
+        <p class="muted" style="font-size:16px;margin-top:10px">Immune boosters for holiday travel, across six units, in my first month as Marcomm.</p>
+        <ul class="did" style="margin-top:16px"><li>Built a weekly evaluation with a pace-based target</li><li>Flagged a recurring discount error and proposed a cashier SOP</li></ul>
+        <div class="res" style="margin-top:20px"><div><div class="big" style="font-size:44px">81%</div><span>of target (55/68)</span></div><div><div class="big" style="font-size:44px">3</div><span>units beat target</span></div></div>
+        <div class="hand ink" style="font-size:24px;margin-top:14px">The premium IV had zero standalone demand, so next time I bundled it.</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:28px">
+      <div class="photo" style="position:relative;transform:rotate(2.5deg);height:max-content"><img src="assets/flyer-acupuncture-nutrition.jpg" alt="Acupuncture and nutrition packages flyer"></div>
+      <div>
+        <div class="kicker">Case 04 · specialist packages</div>
+        <h3 style="margin-top:10px">Acupuncture &amp; Nutrition</h3>
+        <p class="muted" style="font-size:16px;margin-top:10px">Multi-visit packages at the public clinic, aligned with two doctors, finance and the clinic app.</p>
+        <ul class="did" style="margin-top:16px"><li>Package pricing and new procedure codes</li><li>Monthly evaluation combining sales with Instagram insights</li></ul>
+        <div class="res" style="margin-top:20px"><div><div class="big" style="font-size:44px">9<small>/9</small></div><span>acupuncture visits, month 1</span></div><div><div class="big" style="font-size:44px">3–5×</div><span>story reach when doctors reposted</span></div></div>
+        <div class="hand ink" style="font-size:24px;margin-top:14px">Reach isn’t conversion. Next: a clearer path from story to booking.</div>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:70px;margin-top:40px;border-top:1px solid var(--line);padding-top:26px">
+    <div><div class="kicker">Case 05 · community</div><h3 style="margin-top:8px;font-size:28px">OneFamily Community</h3><p style="font-size:16px;margin-top:8px" class="muted">A free WhatsApp patient community that replaced a paid membership. Weekly broadcast, first-joiner reward, a logo per unit, and a tracker that blocks double claims.</p></div>
+    <div><div class="kicker">Case 06 · new service</div><h3 style="margin-top:8px;font-size:28px">Homecare marketing</h3><p style="font-size:16px;margin-top:8px" class="muted">A two-offer Meta ads test: the winning ad was 32% cheaper per WhatsApp chat. Then I diagnosed why chats didn’t book: a trust gap, slow after-hours replies, no landing page.</p></div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 11 OPENER: INSTAGRAM ============ -->
+<section class="slide opener" data-title="Instagram" data-toc="Instagram content" data-tocsub="Audience insights, content pillars, carousels">
+  <div class="folio"><span><b>Aisyah Fajrin M.</b> · Portfolio 2026</span><span>Chapter two</span></div>
+  <div class="kicker">Chapter 02</div>
+  <h2>Instagram<br><em style="color:var(--paper)">content</em></h2>
+  <p>The public clinic’s feed, @klinik_pratama_sunter: education carousels, trust posts and promos, all designed and written by me in Canva.</p>
+  <div class="num">02</div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 12 IG OVERVIEW + INSIGHTS ============ -->
+<section class="slide" data-title="Audience">
+  <div class="folio"><span><b>Instagram</b> · Audience &amp; insights</span><span>22 Jul – 18 Oct 2026</span></div>
+  <div class="phone" style="left:100px;top:96px;transform:rotate(-2deg)"><div class="scr"><div class="notch"></div><div class="scroller"><img src="assets/ig/profile.jpg" alt="Instagram profile of Klinik Pratama Sunter"><img src="assets/ig/grid.jpg" alt="Instagram feed grid"></div></div></div>
+  <div class="hand noprint" style="position:absolute;left:120px;top:770px;transform:rotate(-3deg);font-size:24px">scroll inside the phone</div>
+  <div style="margin-left:470px;margin-top:50px">
+    <div class="kicker">Who we talk to</div>
+    <h2 style="margin-top:12px;font-size:58px">Women, 25–44, <em>after work</em></h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:28px">
+      <div class="panel">
+        <div class="lab">Age range of followers</div>
+        <div class="ins">
+          <div class="hbar"><span>18–24</span><i><b style="width:17.7%"></b></i><span class="v">8.1%</span></div>
+          <div class="hbar"><span>25–34</span><i><b style="width:100%;background:var(--accent)"></b></i><span class="v">45.8%</span></div>
+          <div class="hbar"><span>35–44</span><i><b style="width:64.6%;background:var(--accent)"></b></i><span class="v">29.6%</span></div>
+          <div class="hbar"><span>45–54</span><i><b style="width:20.3%"></b></i><span class="v">9.3%</span></div>
+          <div class="hbar"><span>55+</span><i><b style="width:15.5%"></b></i><span class="v">7.1%</span></div>
+        </div>
+        <div style="display:flex;gap:22px;margin-top:18px;border-top:1px solid var(--line);padding-top:14px">
+          <div><div class="big" style="font-size:40px">65%</div><span class="muted" style="font-size:13px">women</span></div>
+          <div><div class="big" style="font-size:40px">97%</div><span class="muted" style="font-size:13px">in Indonesia</span></div>
+        </div>
+      </div>
+      <div style="display:grid;gap:18px">
+        <div class="panel">
+          <div class="lab">When they’re online</div>
+          <div class="big" style="font-size:42px">6–9 PM</div>
+          <p class="muted" style="font-size:15px;margin-top:6px">Busiest on Tuesday, Sunday and Wednesday. I schedule feed posts for the evening.</p>
+        </div>
+        <div class="panel">
+          <div class="lab">Reach</div>
+          <div style="display:flex;gap:24px"><div><div class="big" style="font-size:42px">4.8K</div><span class="muted" style="font-size:13px">views, last 30 days</span></div><div><div class="big" style="font-size:42px">1,246</div><span class="muted" style="font-size:13px">followers</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hand ink" style="margin-top:22px;font-size:25px;max-width:52ch">Follower count stayed flat (+0.3%). This is a neighbourhood clinic, so I measured views and follows per post instead, and the most-followed posts were practical ones: doctor schedules and faces.</div>
+  </div>
+  <div class="foot" style="left:470px">Source: Instagram Insights, custom range 22 Jul – 18 Oct 2026. Views: last 30 days as of 18 Oct.</div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 13 CONTENT PILLARS ============ -->
+<section class="slide" data-title="Content pillars">
+  <div class="folio"><span><b>Instagram</b> · Content strategy</span><span>4 pillars</span></div>
+  <div class="kicker" style="margin-top:56px">How the feed is planned</div>
+  <h2 style="margin-top:12px">Educate, earn trust, <em>then convert</em></h2>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:40px" id="pillars"></div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 14 VOLCANIC ASH ============ -->
+<section class="slide" data-title="Carousel: volcanic ash">
+  <div class="folio"><span><b>Instagram</b> · Carousel breakdown</span><span>Preventive education · Sep 2026</span></div>
+  <div style="display:flex;justify-content:space-between;align-items:end;margin-top:54px">
+    <div><div class="kicker">Reactive content</div><h2 style="margin-top:12px;font-size:58px">Can volcanic ash <em>reach your lungs?</em></h2>
+      <p class="muted" style="margin-top:12px;max-width:62ch;font-size:18px">Posted after Anak Krakatau erupted. A timely question in the hook, then who is at risk, what to do, and when to see a doctor.</p></div>
+    <span class="sticker sage" style="transform:rotate(4deg)">7 slides</span>
+  </div>
+  <div class="car" style="margin-top:34px" data-group="ash" data-w="191"></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:34px;border-top:1.5px solid var(--ink);padding-top:18px">
+    <div><div class="lab">Timing</div><p style="font-size:16px">Published while the eruption was in the news, so the hook answers a question people were already asking.</p></div>
+    <div><div class="lab">Structure</div><p style="font-size:16px">Hook, risk, who’s vulnerable, five actions, the overlooked eye care tip, then when to see a doctor.</p></div>
+    <div><div class="lab">Call to action</div><p style="font-size:16px">“Share this with family who live nearby.” Education first; the clinic only appears as the place to get checked.</p></div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 15 TWO CAROUSELS ============ -->
+<section class="slide" data-title="Carousels: myths and diets">
+  <div class="folio"><span><b>Instagram</b> · Carousel breakdown</span><span>Education that leads to a promo</span></div>
+  <div style="display:grid;grid-template-columns:330px 1fr;gap:40px;margin-top:50px;align-items:center">
+    <div><div class="kicker">423 views · top feed post</div><h3 style="margin-top:8px">“Why are people scared of acupuncture?”</h3><p class="muted" style="font-size:16px;margin-top:8px">Myth-busting in speech bubbles, then a first-visit price for the acupuncture package.</p></div>
+    <div class="car" data-group="akup" data-w="196"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:330px 1fr;gap:40px;margin-top:30px;align-items:center;border-top:1px solid var(--line);padding-top:26px">
+    <div><div class="kicker">233 views · nutrition</div><h3 style="margin-top:8px">“Strict diet, but your weight keeps bouncing?”</h3><p class="muted" style="font-size:16px;margin-top:8px">My nutrition background in three reasons, ending with a nutrition consultation offer.</p></div>
+    <div class="car" data-group="diet" data-w="196"></div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 16 SINYAL + BPJS ============ -->
+<section class="slide" data-title="Carousels: campaign and trust">
+  <div class="folio"><span><b>Instagram</b> · Carousel breakdown</span><span>Campaign tie-in · trust</span></div>
+  <div style="display:grid;grid-template-columns:330px 1fr;gap:40px;margin-top:50px;align-items:center">
+    <div><div class="kicker">Campaign tie-in</div><h3 style="margin-top:8px">“3 signs your body needs a recharge”</h3><p class="muted" style="font-size:16px;margin-top:8px">Relatable office fatigue, linked to the Sehat Merdeka vitamin promo on the last slide.</p></div>
+    <div class="car" data-group="sinyal" data-w="196"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:330px 1fr;gap:40px;margin-top:30px;align-items:center;border-top:1px solid var(--line);padding-top:26px">
+    <div><div class="kicker">Trust &amp; social proof</div><h3 style="margin-top:8px">“We serve BPJS patients”</h3><p class="muted" style="font-size:16px;margin-top:8px">Facility code, services and a reminder to keep membership active. Supports the BPJS goal in Sehat Merdeka.</p></div>
+    <div class="car" data-group="bpjs" data-w="196"></div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 17 MOST FOLLOWED ============ -->
+<section class="slide" data-title="Most-followed posts">
+  <div class="folio"><span><b>Instagram</b> · What earned follows</span><span>22 Jul – 18 Oct 2026</span></div>
+  <div style="display:grid;grid-template-columns:480px 1fr;gap:70px;margin-top:56px">
+    <div>
+      <div class="kicker">Top content by follows</div>
+      <h2 style="margin-top:12px;font-size:60px">People follow for <em>real faces</em></h2>
+      <p style="margin-top:22px">The doctor schedule post brought the most new followers in the period (+5), ahead of every promo. “Meet Our Doctor” posts also earned follows.</p>
+      <div class="panel" style="margin-top:26px">
+        <div class="lab">What I’m doing with it</div>
+        <ul class="did"><li>Keep schedules and doctor intros as a monthly rhythm</li><li>Put doctors’ faces in promo visuals too</li><li>Ask doctors to repost; it lifted story reach 3–5×</li></ul>
+      </div>
+    </div>
+    <div style="position:relative">
+      <div class="photo" style="width:330px;left:-10px;top:40px;transform:rotate(-4deg)"><img src="assets/ig/jadwal.jpg" alt="Doctor schedule post" data-lb="trust"></div>
+      <div class="photo" style="width:310px;left:290px;top:150px;transform:rotate(3deg)"><img src="assets/ig/doc-sheira.jpg" alt="Meet Our Doctor post, nutrition doctor" data-lb="trust"></div>
+      <div class="photo" style="width:290px;left:580px;top:30px;transform:rotate(-1.5deg)"><img src="assets/ig/doc-mayo.jpg" alt="Meet Our Doctor post, acupuncture doctor" data-lb="trust"></div>
+      <span class="sticker red" style="position:absolute;left:40px;top:500px;transform:rotate(-6deg);font-size:18px">+5 follows</span>
+      <div class="hand" style="position:absolute;left:40px;top:580px;transform:rotate(-2deg);width:330px">the most-followed post in the period</div>
+    </div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 18 OPENER: DASHBOARDS ============ -->
+<section class="slide opener" data-title="Dashboards" data-toc="Dashboards &amp; tools" data-tocsub="Live demos with dummy data">
+  <div class="folio"><span><b>Aisyah Fajrin M.</b> · Portfolio 2026</span><span>Chapter three</span></div>
+  <div class="kicker">Chapter 03</div>
+  <h2>Dashboards<br><em style="color:var(--paper)">&amp; tools</em></h2>
+  <p>Small tools that save hours: weekly reports, a marketing cockpit and promo evaluations. Every demo runs on dummy data, so you can click around freely.</p>
+  <div class="num">03</div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 19 DASH 1 ============ -->
+<section class="slide" data-title="Reports">
+  <div class="folio"><span><b>Dashboards</b> · Reporting</span><span>Demo data</span></div>
+  <div class="dash" style="left:88px;top:110px">
+    <div class="browser" style="transform:rotate(-1deg)"><div class="bar"><i></i><i></i><i></i></div><img src="assets/shot-weekly-ceo-report.jpg" alt="Weekly CEO report dashboard" data-lb="dash"></div>
+    <h3>Weekly CEO Report</h3>
+    <p>Five departments in one interactive page every Friday: a decision bar for the CEO at the top, a status board and a key-dates timeline.</p>
+    <div class="row"><a class="btn" data-demo="dashboards/weekly-ceo-report.html" target="_blank" rel="noopener">Open live demo <svg viewBox="0 0 16 16"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a><span class="sticker sage" style="transform:rotate(-3deg)">Every Friday</span></div>
+  </div>
+  <div class="dash" style="left:872px;top:110px">
+    <div class="browser" style="transform:rotate(1deg)"><div class="bar"><i></i><i></i><i></i></div><img src="assets/shot-marketing-hub.jpg" alt="Marketing hub dashboard" data-lb="dash"></div>
+    <h3>Marketing Hub</h3>
+    <p>My morning cockpit. Tasks, programs, content calendar and revenue trend, read live from a Google Sheet through Apps Script.</p>
+    <div class="row"><a class="btn" data-demo="dashboards/marketing-hub.html" target="_blank" rel="noopener">Open live demo <svg viewBox="0 0 16 16"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a><span class="sticker" style="transform:rotate(3deg)">6 views, 1 page</span></div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 20 DASH 2 ============ -->
+<section class="slide" data-title="Evaluation tools">
+  <div class="folio"><span><b>Dashboards</b> · Evaluation &amp; ops</span><span>Demo data</span></div>
+  <div class="dash" style="left:88px;top:110px">
+    <div class="browser" style="transform:rotate(1deg)"><div class="bar"><i></i><i></i><i></i></div><img src="assets/shot-promo-evaluation.jpg" alt="Promo evaluation dashboard" data-lb="dash"></div>
+    <h3>Promo Evaluation</h3>
+    <p>The weekly evaluation behind every campaign: actual vs a target pro-rated by day, per clinic and per service, with notes the team can act on.</p>
+    <div class="row"><a class="btn" data-demo="dashboards/promo-evaluation.html" target="_blank" rel="noopener">Open live demo <svg viewBox="0 0 16 16"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a><span class="sticker blue" style="transform:rotate(-3deg)">Pace, not just totals</span></div>
+  </div>
+  <div class="dash" style="left:872px;top:110px">
+    <div class="browser" style="transform:rotate(-1deg)"><div class="bar"><i></i><i></i><i></i></div><img src="assets/shot-ops-dashboard.jpg" alt="Ops dashboard" data-lb="dash"></div>
+    <h3>Ops Dashboard</h3>
+    <p>Replaced Notion for weekly ops tracking. The team fills it in directly, with a log of who updated what. Built with Google Sheets and Apps Script.</p>
+    <div class="row"><a class="btn" data-demo="dashboards/ops-dashboard.html" target="_blank" rel="noopener">Open live demo <svg viewBox="0 0 16 16"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a><span class="sticker" style="transform:rotate(3deg)">Rp0 software cost</span></div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 21 OPENER: BRAND & STAGE ============ -->
+<section class="slide opener" data-title="Brand, plans &amp; stage" data-toc="Brand, plans &amp; stage" data-tocsub="Brand book, marketing plan, flyers, health talks">
+  <div class="folio"><span><b>Aisyah Fajrin M.</b> · Portfolio 2026</span><span>Chapter four</span></div>
+  <div class="kicker">Chapter 04</div>
+  <h2>Brand, plans<br><em style="color:var(--paper)">&amp; stage</em></h2>
+  <p>The work around the campaigns: a brand book, a five-month plan, print materials, and a microphone at every health talk.</p>
+  <div class="num">04</div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 22 STRATEGY / BRAND / STAGE ============ -->
+<section class="slide" data-title="Strategy &amp; brand">
+  <div class="folio"><span><b>Brand, plans &amp; stage</b></span><span>Oct 2026</span></div>
+  <div class="kicker" style="margin-top:56px">Around the campaigns</div>
+  <h2 style="margin-top:12px;font-size:58px">Plans, a brand book, <em>and a microphone</em></h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:40px">
+    <div class="panel" style="transform:rotate(-1deg)">
+      <div class="kicker">Strategy</div>
+      <h3 style="margin-top:10px">Marketing Plan, Nov 2026 – Mar 2027</h3>
+      <p class="muted" style="font-size:16px;margin-top:10px">A five-month plan after the network refocused on corporate in-house clinics and homecare.</p>
+      <ul class="did" style="margin-top:16px"><li>Three pillars ranked by impact, effort and dependency</li><li>Five promo design rules drawn from past results</li><li>Monthly timeline with KPIs on a Jan–Oct baseline</li></ul>
+      <div class="hand ink" style="font-size:24px;margin-top:16px">A plan is useful when it says what comes first.</div>
+    </div>
+    <div class="panel" style="transform:rotate(.8deg)">
+      <div class="kicker">Brand</div>
+      <h3 style="margin-top:10px">Brand Book &amp; Vendor Kit</h3>
+      <p class="muted" style="font-size:16px;margin-top:10px">A stiff draft rebuilt as an editorial web book, in two versions from one source.</p>
+      <ul class="did" style="margin-top:16px"><li>Logo rules, colour palette, type system and tone of voice</li><li>Homecare guideline merged in</li><li>Internal book with audience profiles; vendor kit with a delivery checklist</li></ul>
+      <div class="hand ink" style="font-size:24px;margin-top:16px">Freelancers get the rules once and stop guessing.</div>
+    </div>
+    <div class="panel" style="transform:rotate(-.6deg)">
+      <div class="kicker">Stage</div>
+      <h3 style="margin-top:10px">Health Talks: MC &amp; speaker</h3>
+      <p class="muted" style="font-size:16px;margin-top:10px">Partner companies book health talks for their employees. I host every one at our in-house clinics.</p>
+      <ul class="did" style="margin-top:16px"><li>MC from opening to Q&amp;A, with a cue card per session</li><li>Speaker at one: “Maintaining a Balanced Diet at Work and Beyond”</li></ul>
+      <div class="hand ink" style="font-size:24px;margin-top:16px">A good host makes the doctor’s message land.</div>
+      <div class="lab" style="margin-top:14px;color:var(--accent-ink)">Photos on the next two pages →</div>
+    </div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+
+<!-- ============ ON STAGE: SPEAKER ============ -->
+<section class="slide" data-title="On stage: speaker">
+  <div class="folio"><span><b>Brand, plans &amp; stage</b> · On stage</span><span>As a speaker · 2026</span></div>
+  <div style="max-width:560px;margin-top:58px">
+    <div class="kicker">On stage · speaker</div>
+    <h2 style="margin-top:12px;font-size:60px">Talking food <em>at work</em></h2>
+    <p style="margin-top:22px;font-size:20px">A health talk for a partner company’s employees, where I was the speaker, not the host. My nutrition background, made practical for people who eat at their desks.</p>
+    <div class="panel" style="margin-top:28px">
+      <div class="lab">The session</div>
+      <p style="font-family:var(--serif);font-size:26px;line-height:1.2">“Maintaining a Balanced Diet at Work and Beyond”</p>
+      <ul class="did" style="margin-top:16px"><li>Why a balanced diet matters for energy and focus at work</li><li>The impact of nutrition on productivity</li><li>Simple balanced-plate principles they can use the same day</li></ul>
+    </div>
+  </div>
+  <div class="photo tape" style="width:370px;left:700px;top:120px;transform:rotate(-2.5deg)"><img src="assets/stage/speaker-hero.jpg" alt="Aisyah presenting 'Why Balanced Diet Matters'" data-lb="stage"></div>
+  <div class="photo" style="width:200px;left:1110px;top:150px;transform:rotate(3deg)"><img src="assets/stage/speaker-room.jpg" alt="Wide view of the room during the talk" data-lb="stage"></div>
+  <div class="photo" style="width:200px;left:1300px;top:330px;transform:rotate(-2deg)"><img src="assets/stage/speaker-2.jpg" alt="Aisyah presenting nutrition and productivity data" data-lb="stage"></div>
+  <span class="sticker blue" style="position:absolute;left:1080px;top:600px;transform:rotate(-5deg);font-size:17px">Speaker, not just MC</span>
+  <div class="hand" style="position:absolute;left:700px;top:700px;transform:rotate(-2deg);width:420px">where the nutritionist and the marketer meet</div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ ON STAGE: MC ============ -->
+<section class="slide" data-title="On stage: MC">
+  <div class="folio"><span><b>Brand, plans &amp; stage</b> · On stage</span><span>As MC · 2026</span></div>
+  <div class="photo tape" style="width:500px;left:80px;top:100px;transform:rotate(-2deg)"><img src="assets/stage/mc-hero.jpg" alt="Aisyah hosting a health talk as MC" data-lb="mc"></div>
+  <span class="sticker red" style="position:absolute;left:470px;top:760px;transform:rotate(-7deg);font-size:18px">mic in hand</span>
+  <div style="margin-left:640px;margin-top:50px">
+    <div class="kicker">On stage · MC</div>
+    <h2 style="margin-top:12px;font-size:60px">The host of <em>every health talk</em></h2>
+    <p style="margin-top:20px;font-size:19px;max-width:52ch">Partner companies book health talks for their employees. I host every one at our in-house clinics, from the opening to the last question.</p>
+    <div class="res" style="margin-top:26px">
+      <div><div class="big">120</div><span>participants at one hybrid talk, most of them online</span></div>
+      <div><div class="big">Every</div><span>in-house clinic health talk, hosted as MC</span></div>
+    </div>
+    <div style="display:flex;gap:26px;margin-top:30px">
+      <div class="photo" style="position:relative;width:420px;transform:rotate(1.5deg)"><img src="assets/stage/mc-group.jpg" alt="Group photo after a hybrid health talk" data-lb="mc"></div>
+      <div class="photo" style="position:relative;width:420px;transform:rotate(-1.5deg)"><img src="assets/stage/mc-group-2.jpg" alt="Group photo after a health talk at a partner site" data-lb="mc"></div>
+    </div>
+    <div class="hand ink" style="font-size:24px;margin-top:18px">hybrid means two audiences at once: the room and the chat</div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 23 FLYERS ============ -->
+<section class="slide" data-title="Campaign visuals">
+  <div class="folio"><span><b>Brand, plans &amp; stage</b> · Print</span><span>Designed in Canva</span></div>
+  <div style="display:flex;justify-content:space-between;align-items:end;margin-top:54px">
+    <div><div class="kicker">Campaign visuals</div><h2 style="margin-top:12px;font-size:58px">One system, <em>a version per clinic</em></h2></div>
+    <p class="muted" style="max-width:38ch;font-size:16px">Each campaign needs flyers that fit clinics with different prices and audiences. Public promo prices shown.</p>
+  </div>
+  <div style="position:relative;height:640px;margin-top:6px">
+    <div class="photo tape" style="width:350px;left:-10px;top:30px;transform:rotate(-4deg)"><img src="assets/flyer-sehat-merdeka.jpg" alt="Sehat Merdeka flyer" data-lb="flyer"></div>
+    <div class="photo tape" style="width:350px;left:350px;top:50px;transform:rotate(2deg)"><img src="assets/flyer-immune-season.jpg" alt="Immune Season flyer" data-lb="flyer"></div>
+    <div class="photo tape" style="width:350px;left:710px;top:24px;transform:rotate(-1.5deg)"><img src="assets/flyer-acupuncture-nutrition.jpg" alt="Acupuncture and nutrition flyer" data-lb="flyer"></div>
+    <div class="photo tape" style="width:340px;left:1075px;top:46px;transform:rotate(3.5deg)"><img src="assets/flyer-travel-immunity.jpg" alt="Travel Emergen-C homecare flyer" data-lb="flyer"></div>
+  </div>
+  <div class="pno"></div>
+</section>
+
+<!-- ============ 24 CONTACT ============ -->
+<section class="slide" data-title="Contact" data-toc="Contact" data-tocsub="Let’s talk">
+  <div class="folio"><span><b>Aisyah Fajrin M.</b> · Portfolio 2026</span><span>The end</span></div>
+  <div style="margin-top:120px;max-width:1300px">
+    <div class="kicker">Thanks for reading</div>
+    <h1 style="font-size:230px;line-height:.9;margin-top:20px;font-weight:600;letter-spacing:-.035em">Let’s <em>talk.</em></h1>
+    <p style="margin-top:40px;font-size:28px;max-width:44ch">I’m happy to walk you through any campaign, dashboard or post in more detail.</p>
+    <div style="display:flex;gap:18px;margin-top:44px;flex-wrap:wrap;font-size:19px" class="bigbtn">
+      <a class="btn" href="mailto:aisyfmr@gmail.com">aisyfmr@gmail.com</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/aisyah-fajrin-muthmainnah" target="_blank" rel="noopener">linkedin.com/in/aisyah-fajrin-muthmainnah</a>
+    </div>
+    <p class="printonly muted" style="margin-top:22px;font-size:16px">Interactive version with live demos: <a id="selflink" href="#"></a></p>
+  </div>
+  <div class="hand" style="position:absolute;left:1030px;top:250px;transform:rotate(-6deg);font-size:46px">thank you!</div>
+  <svg class="arrow" style="left:960px;top:310px" width="90" height="70" viewBox="0 0 90 70"><path d="M80 8 C 60 20, 40 38, 14 58"/><path d="M14 58 l 15 -1 M14 58 l 4 -14"/></svg>
+  <div class="pno"></div>
+</section>
+
+</div></div>
+
+<div id="ui" class="noprint">
+  <button id="prev" aria-label="Previous slide"><svg viewBox="0 0 20 20"><path d="M12 4 6 10l6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+  <button id="next" aria-label="Next slide"><svg viewBox="0 0 20 20"><path d="m8 4 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+  <div id="bar"><i></i></div>
+  <span id="count"></span>
+  <a id="pdf" href="Portfolio_Ais_2026.pdf" style="color:#EDE6D8;font-size:13px;text-decoration:underline">PDF</a>
+</div>
+<div id="lb" class="noprint" role="dialog" aria-modal="true" aria-label="Image viewer"><button class="x" aria-label="Close">✕</button><button class="p" aria-label="Previous image">‹</button><img alt=""><button class="n" aria-label="Next image">›</button><div class="c"></div></div>
+
+<script>
+(function(){
+const Q=new URLSearchParams(location.search);
+const PRINT=Q.has('print');
+const BASE=Q.get('base')||'';
+if(PRINT) document.body.classList.add('print');
+
+/* ---------- content data ---------- */
+const GROUPS={
+  ash:{n:7,caps:["hook: a timely question","why it matters","who is most at risk","5 things to do","the overlooked one: eyes","when to see a doctor","share it with family"]},
+  akup:{n:5,caps:["hook","myth vs fact","what it treats","soft sell","first-visit price"]},
+  diet:{n:5,caps:["hook","relatable","3 reasons","the fix","consultation offer"]},
+  sinyal:{n:5,caps:["hook","sign 1","sign 2","sign 3","promo tie-in"]},
+  bpjs:{n:3,caps:["the claim","what you get","keep BPJS active"]}
+};
+const PILLARS=[
+  {t:"Preventive Education",img:"assets/ig/ash-1.jpg",d:"Timely health questions answered simply: ash, diets, fatigue, acupuncture myths.",tag:"most posts",c:"sage"},
+  {t:"Trust & Social Proof",img:"assets/ig/bpjs-1.jpg",d:"BPJS service, doctor intros, schedules and patient reviews.",tag:"most follows",c:"blue"},
+  {t:"Promo & Conversion",img:"assets/ig/promo-sm.jpg",d:"Each promo gets a soft entry from an education post, then a clear price slide.",tag:"ties to campaigns",c:"red"},
+  {t:"Engagement",img:"assets/ig/story-poll.jpg",d:"Story polls and relatable questions that get followers to respond and keep the account human between promos.",tag:"keeps it human",c:""}
+];
+const W=[ // Sehat Merdeka Wrapped, anonymized
+ {c:"red",h:`<div class="wk">Recap program · 1 Agu – 30 Sep 2026</div><div class="wt" style="font-size:40px;margin-top:70px">Sehat Merdeka Wrapped</div><div class="wp">Hasil promo kita selama 2 bulan, dirangkum dalam beberapa layar.</div><div class="wfoot">Ketuk untuk lanjut →</div>`,cap:"cover"},
+ {c:"cream",h:`<div class="wk">Pesertanya</div><div class="wt">61 hari. 4 klinik. 1 promo.</div><div class="wp">Diskon 17% untuk layanan suntik dan infus vitamin.</div><div class="wp" style="font-weight:700;margin-top:24px">Kenapa 17%? Karena angkanya sama dengan tanggal kemerdekaan.</div>`,cap:"set the scene"},
+ {c:"red",h:`<div class="wk">Tebak dulu</div><div class="wt">Berapa total transaksi promo dari keempat klinik?</div><div style="margin-top:22px"><button class="opt">66 transaksi</button><button class="opt right">87 transaksi</button><button class="opt">112 transaksi</button></div>`,cap:"guess first"},
+ {c:"red",h:`<div class="wk">Total transaksi promo</div><div class="wn">87</div><div class="wt" style="font-size:22px;margin-top:18px">Targetnya 66. Kita lewat 21 transaksi.</div><div class="wp">Keempat klinik berhasil melewati target masing-masing.</div>`,cap:"the big number"},
+ {c:"cream",h:`<div class="wk">Penghargaan</div><div class="wt" style="font-size:24px">Semua klinik juara, dengan caranya masing-masing.</div>`+poles(),cap:"no ranking: flag poles"},
+ {c:"navy",h:`<div class="wk">Layanan favorit</div><div class="wt" style="font-size:26px">Neuroboost Shot paling banyak dipilih.</div><div class="svc"><div><b>Neuroboost Shot · 32</b><i style="width:100%"></i></div><div><b>Total Vitality Drip · 19</b><i style="width:59%"></i></div><div><b>Immune Shot · 18</b><i style="width:56%"></i></div></div>`,cap:"what patients chose"},
+ {c:"cream",h:`<div class="wk">Sorotan · Klinik Sunter</div><div class="wn" style="color:#C8102E">18</div><div class="wt" style="font-size:22px;margin-top:16px">pasien BPJS memakai layanan preventif.</div><div class="wp">Targetnya 4 pasien. 2 pasien datang lagi sebulan kemudian.</div>`,cap:"a highlight"},
+ {c:"red",h:`<div class="wk">Hasil evaluasi</div><div class="wt" style="font-size:26px">Yang perlu kita perbaiki bareng</div><div class="fix"><b>5 transaksi tercatat tanpa diskon promo</b><p>Caranya: cek harga promo sudah terpasang sebelum transaksi ditutup.</p></div><div class="fix" style="margin-top:10px"><b>Mood Booster belum terjual</b><p>Caranya: tawarkan saat konsultasi.</p></div>`,cap:"the fixes stay in"},
+ {c:"navy",h:`<div class="wk">Terima kasih</div><div class="wt" style="font-size:34px;margin-top:40px">Terima kasih, tim medical!</div><div class="wp">Hasil ini tidak akan tercapai tanpa kalian yang menawarkan promo, melayani pasien, dan mencatat setiap transaksi.</div><div class="wfoot">Sampai jumpa di promo berikutnya.</div>`,cap:"thank the team"}
+];
+function poles(){
+  const C=[["Sunter",56,51],["Korp. A",9,4],["Korp. B",17,8],["Korp. C",5,3]];
+  const H=210,max=2.4;
+  return '<div class="poles">'+C.map(([n,a,t])=>{
+    const y=H-(a/t)/max*H, ty=H-(1/max)*H;
+    return `<div class="pole"><div class="stick" style="height:${H}px;top:0;bottom:auto"></div><div class="tgt" style="top:${ty}px"></div><div class="flag" style="top:${y}px;margin-left:1px"></div><span class="ct" style="top:${y+24}px;transform:translateX(5px)">${a}</span><div class="nm" style="position:absolute;top:${H+8}px;left:0;right:0">${n}<br><span style="font-weight:500;opacity:.75">target ${t}</span></div></div>`}).join('')+'</div><div class="wp" style="font-size:12px;margin-top:44px">Garis putus-putus = target. Bendera = hasil.</div>';
+}
+
+/* ---------- build bits ---------- */
+document.querySelectorAll('.car').forEach(el=>{
+  const g=el.dataset.group, w=+(el.dataset.w||168), G=GROUPS[g];
+  for(let i=1;i<=G.n;i++){
+    const f=document.createElement('figure');f.style.width=w+'px';
+    f.innerHTML=`<img src="assets/ig/${g}-${i}.jpg" width="${w}" height="${Math.round(w*1.25)}" alt="${g} carousel slide ${i}" data-lb="${g}"><figcaption>${i}. ${G.caps[i-1]}</figcaption>`;
+    el.appendChild(f);
+  }
+});
+document.getElementById('pillars').innerHTML=PILLARS.map((p,i)=>`<div><div class="photo" style="position:relative;transform:rotate(${[-2,1.5,-1,2][i]}deg)"><img src="${p.img}" alt="" data-lb="pillar"></div><span class="sticker ${p.c}" style="margin-top:18px">${p.tag}</span><h3 style="font-size:26px;margin-top:14px">${p.t}</h3><p class="muted" style="font-size:15.5px;margin-top:8px">${p.d}</p></div>`).join('');
+document.getElementById('wstrip').innerHTML=W.map(w=>`<div class="cell"><div class="mini"><div class="wcard ${w.c}">${w.h}</div></div><div class="cap">${w.cap}</div></div>`).join('');
+
+/* wrapped phone */
+const ws=document.getElementById('wstory');
+ws.innerHTML='<div class="prog">'+W.map(()=>'<span></span>').join('')+'</div>'+W.map((w,i)=>`<div class="wcard ${w.c}${i?'':' on'}">${w.h}</div>`).join('')+'<button class="tapL" aria-label="Previous story"></button><button class="tapR" aria-label="Next story"></button>';
+let wi=0;const wc=[...ws.querySelectorAll('.wcard')],wp=[...ws.querySelectorAll('.prog span')],prog=ws.querySelector('.prog');
+function wshow(n){wi=(n+W.length)%W.length;wc.forEach((c,i)=>c.classList.toggle('on',i===wi));wp.forEach((s,i)=>s.classList.toggle('done',i<=wi));prog.classList.toggle('dark',W[wi].c==='cream');}
+wshow(0);
+ws.querySelector('.tapL').onclick=e=>{e.stopPropagation();wshow(wi-1)};
+ws.querySelector('.tapR').onclick=e=>{e.stopPropagation();wshow(wi+1)};
+// guess card: in the phone, hide the answer until tapped
+const guess=wc[2];guess.querySelectorAll('.opt').forEach(o=>{o.classList.remove('right');o.onclick=e=>{e.stopPropagation();guess.querySelectorAll('.opt').forEach(x=>x.classList.toggle('right',x.textContent.startsWith('87')));setTimeout(()=>wshow(3),900)}});
+
+/* ---------- slides ---------- */
+const slides=[...document.querySelectorAll('.slide')];
+slides.forEach((s,i)=>{const p=s.querySelector('.pno');if(p)p.textContent=String(i+1).padStart(2,'0')});
+// contents
+const toc=document.getElementById('toc');
+slides.forEach((s,i)=>{if(s.dataset.toc){const li=document.createElement('li');li.innerHTML=`<a data-go="${i}"><span class="nn">${String(toc.children.length+1).padStart(2,'0')}</span><span class="tt">${s.dataset.toc}<small>${s.dataset.tocsub||''}</small></span><span class="pg">p. ${String(i+1).padStart(2,'0')}</span></a>`;toc.appendChild(li)}});
+// demo links
+document.querySelectorAll('[data-demo]').forEach(a=>{a.href=(PRINT&&BASE?BASE:'')+a.dataset.demo});
+const self=document.getElementById('selflink');if(BASE){self.href=BASE;self.textContent=BASE.replace(/^https?:\/\//,'')}
+if(PRINT) return;
+
+let cur=0;
+const deck=document.getElementById('deck'),bar=document.querySelector('#bar i'),count=document.getElementById('count');
+function go(n,push){
+  cur=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,i)=>s.classList.toggle('on',i===cur));
+  bar.style.width=((cur+1)/slides.length*100)+'%';
+  count.textContent=(cur+1)+' / '+slides.length;
+  if(push!==false) history.replaceState(null,'','#'+(cur+1));
+}
+toc.addEventListener('click',e=>{const a=e.target.closest('[data-go]');if(a){if(scrollMode){slides[+a.dataset.go].parentNode.scrollIntoView({behavior:'smooth'})}else go(+a.dataset.go)}});
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('next').onclick=()=>go(cur+1);
+addEventListener('keydown',e=>{
+  if(lb.classList.contains('on')){if(e.key==='Escape')closeLb();if(e.key==='ArrowRight')lbStep(1);if(e.key==='ArrowLeft')lbStep(-1);return}
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(cur+1)}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+  if(e.key==='Home')go(0); if(e.key==='End')go(slides.length-1);
+});
+let tx=null,ty=null;
+addEventListener('touchstart',e=>{if(e.target.closest('.phone'))return;tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+addEventListener('touchend',e=>{if(tx===null||scrollMode)return;const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go(cur+(dx<0?1:-1));tx=null},{passive:true});
+
+/* fit */
+let scrollMode=false;
+function fit(){
+  const vw=innerWidth,vh=innerHeight;
+  const want=vw<760&&vh>vw;
+  if(want!==scrollMode){
+    scrollMode=want;document.body.classList.toggle('scroll',scrollMode);
+    slides.forEach(s=>{if(scrollMode){const w=document.createElement('div');w.className='sw';s.parentNode.insertBefore(w,s);w.appendChild(s)}else if(s.parentNode.classList.contains('sw')){const w=s.parentNode;w.parentNode.insertBefore(s,w);w.remove()}});
+  }
+  if(scrollMode){const k=vw/1600;slides.forEach(s=>{s.style.transform=`scale(${k})`;s.parentNode.style.height=(900*k)+'px'});}
+  else{slides.forEach(s=>s.style.transform='');const k=Math.min(vw/1600,(vh-62)/900);deck.style.transform=`translate(-50%,-50%) scale(${k})`}
+}
+addEventListener('resize',fit);fit();
+const h=parseInt(location.hash.slice(1));go(isNaN(h)?0:h-1,false);
+setTimeout(()=>document.getElementById('hint').style.opacity=0,3500);
+
+/* lightbox */
+const lb=document.getElementById('lb'),lbImg=lb.querySelector('img'),lbC=lb.querySelector('.c');let lbList=[],lbI=0;
+document.addEventListener('click',e=>{const im=e.target.closest('img[data-lb]');if(!im)return;lbList=[...document.querySelectorAll(`img[data-lb="${im.dataset.lb}"]`)];lbI=lbList.indexOf(im);showLb();lb.classList.add('on')});
+function showLb(){const im=lbList[lbI];lbImg.src=im.src;lbImg.alt=im.alt;lbC.textContent=(lbI+1)+' / '+lbList.length}
+function lbStep(d){lbI=(lbI+d+lbList.length)%lbList.length;showLb()}
+function closeLb(){lb.classList.remove('on')}
+lb.querySelector('.x').onclick=closeLb;lb.querySelector('.p').onclick=()=>lbStep(-1);lb.querySelector('.n').onclick=()=>lbStep(1);
+lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
+})();
+</script>
+</body>
+</html>
