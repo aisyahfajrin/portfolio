@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ops Weekly Dashboard · Demo</title>
+  <meta charset="utf-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --ink: #1F2A33; --text: #3D4750; --body: #545454; --muted: #6B7680;
+  --line: #E3EAF0; --line-soft: #EEF2F5; --bg: #F5F8FB; --card: #FFFFFF;
+  --brand: #34B6F8; --brand-dark: #0077B6; --brand-deep: #005A8C; --brand-tint: #EBF7FE;
+  --red: #B42318; --red-tint: #FDF1F0; --amber: #8A5300; --amber-tint: #FFF4E0;
+  --green: #1E6B45; --green-tint: #E6F6EE;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--body); }
+button, input, select, textarea { font-family: inherit; }
+button { cursor: pointer; }
+a { color: var(--brand-dark); } a:hover { color: var(--brand-deep); }
+.muted { color: var(--muted); font-size: 13px; }
+
+.app { display: flex; min-height: 100vh; }
+.side { width: 248px; flex-shrink: 0; background: #fff; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 28px; padding: 28px 18px; position: sticky; top: 0; height: 100vh; overflow: auto; }
+.brand { display: flex; flex-direction: column; gap: 8px; padding: 0 8px; }
+.logo { width: 150px; height: auto; display: block; }
+.brand-sub { font-size: 12px; font-weight: 600; letter-spacing: .6px; color: var(--muted); }
+.nav { display: flex; flex-direction: column; gap: 4px; }
+.nav-item { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 12px; border: none; border-radius: 10px; background: transparent; font-size: 14px; font-weight: 500; color: var(--text); text-align: left; }
+.nav-item:hover { background: #F4F8FB; }
+.nav-item.on { background: var(--brand-tint); color: var(--brand-deep); font-weight: 700; }
+.nav-item .grow { flex-grow: 1; }
+.badge { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #F1F4F7; color: var(--text); }
+.nav-item.on .badge { background: #fff; }
+.nav-group { display: flex; flex-direction: column; gap: 6px; padding: 0 8px; }
+.nav-label { font-size: 11px; font-weight: 700; letter-spacing: .8px; color: var(--muted); padding-bottom: 4px; }
+.dept-item { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 10px; margin: 0 -10px; border: none; border-radius: 10px; background: transparent; font-size: 14px; color: var(--text); text-align: left; }
+.dept-item:hover { background: #F4F8FB; }
+.dept-item.on { background: var(--brand-tint); color: var(--brand-deep); font-weight: 700; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
+
+.main { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; }
+.top { display: flex; align-items: center; gap: 14px; padding: 22px 36px; background: #fff; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; flex-wrap: wrap; }
+.top-title { flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 220px; }
+h1 { margin: 0; font-size: 24px; font-weight: 800; color: var(--ink); letter-spacing: -.3px; }
+.search { display: flex; align-items: center; gap: 8px; width: 280px; height: 44px; padding: 0 14px; border: 1px solid #D5DEE6; border-radius: 10px; background: #F8FAFC; }
+.search input { border: none; background: transparent; outline: none; font-size: 14px; flex-grow: 1; color: var(--ink); }
+.filler { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text); }
+.filler select { height: 44px; padding: 0 10px; border: 1px solid #D5DEE6; border-radius: 10px; font-size: 14px; background: #fff; color: var(--ink); }
+.filler select.need { border-color: var(--red); background: var(--red-tint); }
+.btn { height: 44px; padding: 0 18px; border-radius: 10px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid #D5DEE6; background: #fff; color: var(--ink); }
+.btn.primary { border: none; background: var(--brand-dark); color: #fff; }
+.btn.primary:hover { background: var(--brand-deep); }
+.btn.small { height: 40px; padding: 0 14px; font-size: 13px; }
+.link-btn { background: none; border: none; color: var(--brand-dark); font-size: 13px; font-weight: 700; padding: 8px 0; }
+
+.content { padding: 28px 36px 48px; display: flex; flex-direction: column; gap: 20px; }
+.loading, .empty { padding: 24px; border: 1.5px dashed #C7D3DD; border-radius: 12px; text-align: center; font-size: 13px; color: var(--muted); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 6px; }
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 8px; }
+.card h2 { margin: 0; font-size: 17px; font-weight: 700; color: var(--ink); }
+.source { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: start; }
+.span-2 { grid-column: span 2; }
+.stack { display: flex; flex-direction: column; gap: 20px; }
+.kpi { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.kpi-label { font-size: 13px; font-weight: 600; color: var(--muted); }
+.kpi-value { font-size: 34px; font-weight: 800; color: var(--ink); }
+.kpi-value.bad { color: var(--red); }
+.kpi-note { font-size: 13px; }
+
+.row { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line-soft); }
+.row.top-align { align-items: flex-start; }
+.row .grow { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.row-title { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.45; }
+.row-sub { font-size: 12px; color: var(--muted); }
+.row-text { font-size: 13px; line-height: 1.5; color: var(--body); }
+.clickable { cursor: pointer; }
+.clickable:hover .row-title { color: var(--brand-deep); text-decoration: underline; }
+.late { font-size: 12px; font-weight: 700; color: var(--red); white-space: nowrap; }
+.soon { font-size: 12px; font-weight: 700; color: var(--amber); white-space: nowrap; }
+.plain-date { font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; }
+
+.pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; white-space: nowrap; background: #F2F3F5; color: #4B5563; }
+.pill.sm { font-size: 11px; padding: 3px 9px; }
+.pill.amber { background: var(--amber-tint); color: var(--amber); }
+.pill.blue { background: #E3F3FD; color: var(--brand-deep); }
+.pill.purple { background: #EEEAFB; color: #4B3B8F; }
+.pill.green { background: var(--green-tint); color: var(--green); }
+.pill.red { background: var(--red-tint); color: var(--red); }
+.prio { font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px; flex-shrink: 0; }
+.prio.p1 { background: #0B3C5D; color: #fff; } .prio.p2 { background: #D6EEFD; color: var(--brand-deep); } .prio.p3 { background: #F1F4F7; color: var(--text); }
+
+.bar-row { display: flex; align-items: center; gap: 14px; padding: 5px 0; }
+.bar-name { width: 110px; font-size: 13px; font-weight: 600; color: var(--text); }
+.bar { flex-grow: 1; height: 22px; display: flex; gap: 2px; background: #F1F4F7; border-radius: 6px; overflow: hidden; }
+.bar span { height: 100%; }
+.bar-total { width: 28px; text-align: right; font-size: 14px; font-weight: 700; color: var(--ink); }
+.legend { display: flex; gap: 18px; font-size: 12px; padding-top: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+.chips { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.chip { min-height: 40px; padding: 0 16px; border-radius: 999px; font-size: 13px; font-weight: 600; border: 1px solid #D5DEE6; background: #fff; color: var(--text); }
+.chip.on { border-color: var(--brand-dark); background: var(--brand-dark); color: #fff; }
+.table { background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.tr { display: grid; grid-template-columns: 2.2fr 1.1fr 1.1fr 2.4fr .8fr .8fr; gap: 16px; padding: 16px 22px; border-bottom: 1px solid var(--line-soft); align-items: start; }
+.tr.head { padding: 14px 22px; background: #F8FAFC; border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 700; letter-spacing: .4px; color: var(--muted); }
+.tr.body { cursor: pointer; }
+.tr.body:hover { background: #FAFCFE; }
+.cell { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+.note-list { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px; display: flex; flex-direction: column; gap: 2px; max-height: calc(100vh - 170px); overflow: auto; position: sticky; top: 110px; }
+.note-item { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 56px; padding: 10px 14px; border: none; border-radius: 10px; text-align: left; background: transparent; }
+.note-item:hover { background: #F4F8FB; }
+.note-item.on { background: var(--brand-tint); }
+.note { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 18px; }
+.note-cat { font-size: 12px; font-weight: 700; letter-spacing: .6px; color: var(--brand-dark); text-transform: uppercase; }
+.note h2 { margin: 0; font-size: 22px; font-weight: 800; color: var(--ink); }
+.note h3 { margin: 8px 0 0; font-size: 15px; font-weight: 700; color: var(--ink); }
+.note h3.done { color: var(--green); } .note h3.next { color: var(--brand-deep); }
+.done-item { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: #F3FAF6; border-radius: 10px; font-size: 14px; line-height: 1.5; color: var(--ink); }
+.next-item { display: flex; gap: 12px; align-items: center; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; font-size: 14px; line-height: 1.5; color: var(--ink); }
+.next-item .grow { flex-grow: 1; }
+.md { font-size: 14px; line-height: 1.6; color: var(--body); }
+.md h4 { margin: 18px 0 6px; font-size: 15px; color: var(--ink); }
+.md table { border-collapse: collapse; width: 100%; margin: 6px 0; font-size: 13px; }
+.md td, .md th { border: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
+.md th { background: #F8FAFC; color: var(--text); font-weight: 700; }
+.md hr { border: none; border-top: 1px solid var(--line); margin: 14px 0; }
+.md ul { margin: 4px 0; padding-left: 20px; }
+
+.board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; align-items: start; }
+.col { background: #EDF2F6; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.col-head { display: flex; align-items: center; gap: 8px; padding: 4px 6px; font-size: 14px; font-weight: 700; color: var(--ink); }
+.col-head .grow { flex-grow: 1; }
+.ai-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.ai-card .row-title { cursor: pointer; }
+.ai-card .row-title:hover { color: var(--brand-deep); text-decoration: underline; }
+.ai-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--text); }
+.ai-card select { height: 36px; border: 1px solid #D5DEE6; border-radius: 8px; padding: 0 8px; font-size: 13px; background: #fff; }
+
+.card.dept-head { flex-direction: row; align-items: center;
+}
+.dept-head { display: flex; align-items: center; gap: 24px; padding: 22px 24px; }
+.dept-bar { width: 6px; align-self: stretch; border-radius: 3px; }
+.stat { display: flex; flex-direction: column; gap: 2px; padding-left: 24px; border-left: 1px solid var(--line-soft); min-width: 120px; }
+.stat b { font-size: 24px; font-weight: 800; color: var(--ink); }
+.stat b.bad { color: var(--red); }
+.stat span { font-size: 12px; color: var(--muted); }
+.last-note { display: flex; flex-direction: column; gap: 8px; padding: 16px; background: #F5FAFE; border-radius: 12px; }
+.small-label { font-size: 12px; font-weight: 700; letter-spacing: .4px; padding-top: 4px; }
+.warn-box { display: flex; flex-direction: column; gap: 12px; padding: 18px; background: var(--red-tint); border-radius: 12px; }
+
+.overlay { position: fixed; inset: 0; background: rgba(17, 33, 46, .38); display: flex; justify-content: flex-end; z-index: 20; }
+.overlay[hidden] { display: none; }
+.drawer { width: 520px; max-width: 100%; height: 100%; background: #fff; padding: 32px; display: flex; flex-direction: column; gap: 16px; overflow: auto; }
+.drawer-head { display: flex; align-items: center; justify-content: space-between; }
+.drawer h2 { margin: 0; font-size: 20px; font-weight: 800; color: var(--ink); }
+.icon-btn { width: 44px; height: 44px; border: none; background: #F1F4F7; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+.field { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text); }
+.field input, .field select, .field textarea { min-height: 44px; padding: 10px 12px; border: 1px solid #D5DEE6; border-radius: 10px; font-size: 14px; color: var(--ink); background: #fff; font-weight: 400; }
+.field textarea { resize: vertical; line-height: 1.5; }
+.field .hint { font-weight: 400; font-size: 12px; color: var(--muted); }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.checks { display: flex; flex-wrap: wrap; gap: 8px; }
+.checks input { min-height: 0; padding: 0; width: 16px; height: 16px; margin: 0; }
+.checks label { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid #D5DEE6; border-radius: 999px; font-weight: 500; font-size: 13px; }
+.drawer-foot { display: flex; gap: 10px; margin-top: auto; padding-top: 8px; }
+.drawer-foot .btn { flex-grow: 1; height: 46px; }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 10px; font-size: 14px; z-index: 30; }
+.toast.err { background: var(--red); }
+
+@media (max-width: 1300px) {
+  .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 1100px) {
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-3, .board { grid-template-columns: minmax(0, 1fr); }
+  .span-2 { grid-column: auto; }
+  .tr { grid-template-columns: 2fr 1fr 1.6fr; }
+  .tr > :nth-child(4), .tr > :nth-child(5) { display: none; }
+  .note-list { position: static; max-height: 320px; }
+}
+@media (max-width: 760px) {
+  .app { flex-direction: column; }
+  .side { width: 100%; height: auto; position: static; flex-direction: row; flex-wrap: wrap; gap: 12px; padding: 16px; }
+  .nav { flex-direction: row; flex-wrap: wrap; }
+  .nav-group { width: 100%; flex-direction: row; flex-wrap: wrap; gap: 4px 14px; }
+  .nav-label { width: 100%; }
+  .top, .content { padding-left: 16px; padding-right: 16px; }
+  .search { width: 100%; }
+  .grid-4 { grid-template-columns: minmax(0, 1fr); }
+  .dept-head { flex-wrap: wrap; }
+}
+</style>
+
+</head>
+<body>
+<div class="app">
+  <nav class="side" aria-label="Main menu">
+    <div class="brand">
+      <img class="logo" alt="OneKlinik" src="data:image/png;base64,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">
+
+      <span class="brand-sub">OPS WEEKLY</span>
+    </div>
+    <div class="nav" id="nav"></div>
+    <div class="nav-group">
+      <span class="nav-label">DEPARTMENTS</span>
+      <div id="deptNav"></div>
+    </div>
+  </nav>
+
+  <main class="main">
+    <header class="top">
+      <div class="top-title">
+        <h1 id="viewTitle">Ops Weekly Dashboard</h1>
+        <span id="subTitle" class="muted">Loading data…</span>
+      </div>
+      <label class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7680" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+        <input id="search" type="search" aria-label="Search" placeholder="Search outstanding, clients, notes…">
+      </label>
+      <label class="filler">You
+        <select id="filler" aria-label="Your name">
+          <option value="">Select…</option>
+          <option>Ais</option>
+          <option>Teammate</option>
+        </select>
+      </label>
+      <button type="button" class="btn primary" id="addBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+        <span id="addLabel">Add outstanding</span>
+      </button>
+    </header>
+    <div style="background:#FFF6E0;border:1px solid #F2D9A0;color:#7A5A12;border-radius:10px;padding:10px 14px;font-size:13px;margin:0 0 14px">Demo with dummy data. The real dashboard runs on Google Apps Script with a Google Sheet as the database, replacing the team’s Notion tracker. Edits here are not saved.</div>
+    <div class="content" id="content">
+      <div class="loading">Loading data from Sheet…</div>
+    </div>
+  </main>
+</div>
+
+<div class="overlay" id="overlay" hidden>
+  <form class="drawer" id="drawer" autocomplete="off"></form>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+/* Demo stub: replaces Google Apps Script so the dashboard runs as a static page with dummy data. */
+window.__DEMO_DATA__ = {"outstanding": [{"title": "Contract renewal Partner Site D", "client": "Partner Site D", "dept": "Account Manager", "person": "Account Lead", "status": "", "blocking": "Waiting for Client", "next": "Follow up with partner HR", "raised": "2026-09-28", "target": "2026-10-30", "notes": "Contract ends in December", "id": "OT-001", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"title": "Year-End Recharge pricing", "client": "All sites", "dept": "Marketing", "person": "Ais", "status": "", "blocking": "Internal Alignment", "next": "Finalize with Finance", "raised": "2026-10-09", "target": "2026-10-23", "notes": "Single services only", "id": "OT-002", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"title": "Broadcast tool daily limit", "client": "", "dept": "Marketing", "person": "Ais", "status": "", "blocking": "In Progress", "next": "Ask vendor for higher quota", "raised": "2026-09-30", "target": "2026-10-21", "notes": "Workaround: bulk send", "id": "OT-003", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"title": "Vendor invoices Q3", "client": "", "dept": "Finance", "person": "Finance Lead", "status": "", "blocking": "Waiting for Approval", "next": "Payment run 20 Oct", "raised": "2026-10-05", "target": "2026-10-20", "notes": "", "id": "OT-004", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"title": "Medical equipment calibration", "client": "Partner Site B", "dept": "General Affair", "person": "GA Lead", "status": "", "blocking": "Not started", "next": "Book vendor visit", "raised": "2026-10-12", "target": "2026-11-06", "notes": "", "id": "OT-005", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"title": "Proposal for Prospect B", "client": "Prospect B", "dept": "Business Development", "person": "BD Lead", "status": "", "blocking": "In Progress", "next": "Send proposal", "raised": "2026-10-01", "target": "2026-10-21", "notes": "Wants a 3-month trial", "id": "OT-006", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"title": "Q4 training plan", "client": "", "dept": "Human Resources", "person": "HR Lead", "status": "", "blocking": "In Progress", "next": "Share schedule", "raised": "2026-10-06", "target": "2026-10-23", "notes": "", "id": "OT-007", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"title": "Summer promo evaluation", "client": "All sites", "dept": "Marketing", "person": "Ais", "status": "", "blocking": "Done", "next": "", "raised": "2026-09-28", "target": "2026-10-01", "notes": "118% of target", "id": "OT-008", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}], "actions": [{"title": "Brief Site D medical team on flu-season offer", "meeting": "Marketing 1:1", "timeline": "2026-10-20", "status": "In progress", "area": "Marketing", "owner": "Ais", "priority": "P1 — Critical", "detail": "", "id": "AI-001", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"title": "Renewal follow-up with Partner Site D", "meeting": "AM 1:1", "timeline": "2026-10-30", "status": "Not started", "area": "AM / BD", "owner": "Account Lead", "priority": "P1 — Critical", "detail": "", "id": "AI-002", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"title": "Prepare impact report for partner HR", "meeting": "AM 1:1", "timeline": "2026-11-06", "status": "Not started", "area": "AM / BD", "owner": "Ais", "priority": "P2 — Important", "detail": "", "id": "AI-003", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"title": "Vendor payment run", "meeting": "Finance 1:1", "timeline": "2026-10-20", "status": "In progress", "area": "Finance", "owner": "Finance Lead", "priority": "P2 — Important", "detail": "", "id": "AI-004", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"title": "Share Q4 training schedule", "meeting": "HR 1:1", "timeline": "2026-10-23", "status": "Not started", "area": "HR / People", "owner": "HR Lead", "priority": "P3 — Strategic", "detail": "", "id": "AI-005", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"title": "December flyer set", "meeting": "Marketing 1:1", "timeline": "2026-10-30", "status": "Not started", "area": "Marketing", "owner": "Ais", "priority": "P2 — Important", "detail": "", "id": "AI-006", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"title": "Weekly report to CEO", "meeting": "Ops weekly", "timeline": "2026-10-16", "status": "Done", "area": "Ops", "owner": "Ais", "priority": "P2 — Important", "detail": "", "id": "AI-007", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}], "notes": [{"date": "2026-10-15", "name": "Marketing weekly 1:1", "category": "Marketing", "createdBy": "Ais", "attendees": "Ais, CEO", "done": "Flu-season campaign week 2 review\nSummer promo evaluation shared with clinics\nCommunity broadcast sent", "nextWeek": "Brief Site D medical team | Tue\nFinalize December pricing | Thu", "body": "", "id": "MN-001", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"date": "2026-10-15", "name": "Account Manager weekly 1:1", "category": "Account Manager", "createdBy": "Ais", "attendees": "Account Lead, Ais", "done": "Monthly reports sent to partner HR teams", "nextWeek": "Renewal follow-up with Partner Site D | 30 Oct", "body": "", "id": "MN-002", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"date": "2026-10-14", "name": "Finance & GA weekly", "category": "Finance", "createdBy": "Ais", "attendees": "Finance Lead, GA Lead", "done": "Q3 closing completed", "nextWeek": "Vendor payment run | Tue", "body": "", "id": "MN-003", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"date": "2026-10-14", "name": "Business Development weekly", "category": "Business Development", "createdBy": "Ais", "attendees": "BD Lead", "done": "Two prospects moved to proposal stage", "nextWeek": "Send proposal to Prospect B | 21 Oct", "body": "", "id": "MN-004", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}, {"date": "2026-10-13", "name": "HR weekly", "category": "Human Resources", "createdBy": "Ais", "attendees": "HR Lead", "done": "Nurse onboarding completed", "nextWeek": "Share training schedule | 23 Oct", "body": "", "id": "MN-005", "by": "Ais", "at": "2026-10-16 10:12", "url": ""}], "programs": [{"name": "Flu-Season Campaign", "category": "Marketing - Promotion", "type": "Stand Alone", "start": "2026-10-01", "end": "2026-11-30", "clinics": "Main Clinic, Partner Site A, Partner Site B, Partner Site C", "notes": "Vaccine + vitamin bundles"}, {"name": "Patient Community", "category": "Marketing - Program", "type": "Community", "start": "2026-07-01", "end": "", "clinics": "All sites", "notes": "Weekly broadcast"}, {"name": "Employee Health Talk Series", "category": "Marketing - Awareness", "type": "Stand Alone", "start": "2026-07-15", "end": "2026-12-31", "clinics": "Partner Site A, Partner Site B", "notes": "Monthly"}], "tasks": [{"name": "December flyer set (4 site versions)", "status": "To Do", "raised": "2026-10-09", "due": "2026-10-30", "project": "Year-End Recharge"}, {"name": "Year-End Recharge staff briefing deck", "status": "To Do", "raised": "2026-10-09", "due": "2026-11-20", "project": "Year-End Recharge"}, {"name": "Mid-campaign social posts", "status": "In Progress", "raised": "2026-10-05", "due": "2026-10-24", "project": "Flu-Season Campaign"}], "hubError": "", "lookups": {"Department": ["Marketing", "Account Manager", "Business Development", "Finance", "General Affair", "Human Resources", "Ops"], "Blocking": ["Not started", "In Progress", "Internal Alignment", "Waiting for Approval", "Waiting for Client", "Hold", "Done", "Canceled", "Archived"], "Person": ["Ais", "Account Lead", "BD Lead", "Finance Lead", "GA Lead", "HR Lead", "CEO"], "Meeting Category": ["Marketing", "Account Manager", "Business Development", "Finance", "General Affair", "Human Resources"], "Area": ["Marketing", "AM / BD", "Finance", "HR / People", "Ops"], "Priority": ["P1 — Critical", "P2 — Important", "P3 — Strategic"], "Action Status": ["Not started", "In progress", "Done", "Archived"]}, "meta": {"today": "2026-10-16", "weekLabel": "Week of 12–16 October 2026", "lastUpdate": {"by": "Ais", "at": "16 Oct 10:12"}, "viewer": "Ais"}};
+(function(){
+  var nextN = 100;
+  function runner(){
+    var ok=function(){}, fail=function(){};
+    var api={
+      withSuccessHandler:function(f){ok=f;return api;},
+      withFailureHandler:function(f){fail=f;return api;},
+      getData:function(){ setTimeout(function(){ ok(JSON.parse(JSON.stringify(window.__DEMO_DATA__))); },150); },
+      saveRecord:function(key,obj){
+        var d=window.__DEMO_DATA__, pre={outstanding:'OT',notes:'MN',actions:'AI'}[key];
+        if(obj.id){ d[key]=d[key].map(function(r){ return r.id===obj.id?Object.assign({},r,obj):r; }); }
+        else { obj.id=pre+'-'+(nextN++); d[key].push(obj); }
+        setTimeout(function(){ ok(obj.id+' · demo only, not saved'); },150);
+      }
+    };
+    return api;
+  }
+  window.google={script:{get run(){ return runner(); }}};
+})();
+</script>
+<script>
+(function () {
+  'use strict';
+
+  /* ---------------- State ---------------- */
+  var S = { view: 'overview', dept: 'Marketing', filterDept: 'All', noteId: null, q: '', data: null, filler: '' };
+  var CLOSED = ['Done', 'Canceled', 'Archived'];
+  var DEPTS = [
+    { key: 'Marketing', label: 'Marketing', ot: ['Marketing'], area: 'Marketing', cat: ['Marketing'], color: '#1C8BD1',
+      purpose: 'Campaigns, programs, and promo plans.', cadence: 'program status, campaign milestones, next steps' },
+    { key: 'Account Manager', label: 'Account Manager', ot: ['Account Manager'], area: 'AM / BD', cat: ['Account Manager'], color: '#1E8A5A',
+      purpose: 'Client outstanding items, meeting notes, and programs per IHC.', cadence: 'open work, blockers, approvals, client follow-ups' },
+    { key: 'Business Development', label: 'Business Development', ot: ['Business Development'], area: 'AM / BD', cat: ['Business Development'], color: '#8A5300',
+      purpose: 'Outreach, new partnerships, and contract renewals.', cadence: 'open work, blockers, approvals, client follow-ups' },
+    { key: 'Finance', label: 'Finance & General Affair', ot: ['Finance', 'General Affair'], area: 'Finance', cat: ['Finance', 'General Affair'], color: '#4B3B8F',
+      purpose: 'Finance & General Affair: outstanding items, dependencies, and deadlines.', cadence: 'outstanding items, dependencies, deadlines' },
+    { key: 'Human Resources', label: 'Human Resources', ot: ['Human Resources'], area: 'HR / People', cat: ['Human Resources'], color: '#B42318',
+      purpose: 'People operations, contracts, handovers, and team decisions.', cadence: 'people actions, contracts, handovers, decisions' }
+  ];
+  var AREAS = ['HR / People', 'Marketing', 'Finance', 'AM / BD', 'Ops'];
+  var BULAN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var ICON_SYNC = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1E8A5A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v5h-5"></path></svg>';
+  var ICON_CHECK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E6B45" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M5 12l5 5 9-10"></path></svg>';
+  var ICON_X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3D4750" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>';
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ---------------- Utils ---------------- */
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function pd(s) { var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(s || '')); return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null; }
+  function today() { return pd(S.data.meta.today) || new Date(); }
+  function days(s) { var d = pd(s); return d ? Math.round((d - today()) / 86400000) : null; }
+  function fShort(s) { var d = pd(s); return d ? d.getDate() + ' ' + BULAN[d.getMonth()] : '—'; }
+  function fLong(s) { var d = pd(s); return d ? d.getDate() + ' ' + BULAN[d.getMonth()] + ' ' + d.getFullYear() : '—'; }
+  function list(s) { return String(s || '').split(/\s*[,;]\s*/).filter(Boolean); }
+  function has(s, arr) { var l = list(s); return arr.some(function (a) { return l.indexOf(a) !== -1; }); }
+  function prioN(p) { var m = /P(\d)/.exec(p || ''); return m ? +m[1] : 9; }
+  function isOpen(r) { return CLOSED.indexOf(r.blocking) === -1; }
+  function match(obj, fields) {
+    if (!S.q) return true;
+    var q = S.q.toLowerCase();
+    return fields.some(function (f) { return String(obj[f] || '').toLowerCase().indexOf(q) !== -1; });
+  }
+  function blockPill(b) {
+    var c = { 'Waiting for Client': 'amber', 'Waiting for Approval': 'amber', 'In Progress': 'blue', 'Internal Alignment': 'purple', 'Done': 'green', 'Canceled': 'red' }[b] || '';
+    return '<span class="pill ' + c + '">' + esc(b || '—') + '</span>';
+  }
+  function dueLabel(s, closed) {
+    var d = days(s);
+    if (d === null) return '<span class="plain-date">—</span>';
+    if (!closed && d < 0) return '<span class="late">' + (-d) + ' days overdue</span>';
+    if (!closed && d <= 3) return '<span class="soon">' + (d === 0 ? 'Today' : fShort(s)) + '</span>';
+    return '<span class="plain-date">' + fShort(s) + '</span>';
+  }
+  function deptOf(key) { return DEPTS.filter(function (d) { return d.key === key; })[0]; }
+  function notesSorted() { return S.data.notes.slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); }); }
+  var AI_CLOSED = ['Done', 'Archived'];
+  function openActions() { return S.data.actions.filter(function (a) { return AI_CLOSED.indexOf(a.status) === -1; }); }
+  function toast(msg, err) {
+    var t = $('toast'); t.textContent = msg; t.className = 'toast' + (err ? ' err' : ''); t.hidden = false;
+    clearTimeout(toast._t); toast._t = setTimeout(function () { t.hidden = true; }, err ? 6000 : 2500);
+  }
+  function lsGet(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  // Markdown ringan untuk catatan lama dari Notion
+  function md(text) {
+    var lines = String(text || '').replace(/\r/g, '').split('\n');
+    var out = [], tbl = [], ul = [];
+    function inline(s) {
+      return esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    }
+    function flushT() {
+      if (!tbl.length) return;
+      var rows = tbl.map(function (l) { return l.replace(/^\||\|$/g, '').split('|').map(function (c) { return c.trim(); }); });
+      var h = '<table><tr>' + rows[0].map(function (c) { return '<th>' + inline(c) + '</th>'; }).join('') + '</tr>';
+      rows.slice(1).forEach(function (r) { h += '<tr>' + r.map(function (c) { return '<td>' + inline(c) + '</td>'; }).join('') + '</tr>'; });
+      out.push(h + '</table>'); tbl = [];
+    }
+    function flushU() { if (ul.length) { out.push('<ul>' + ul.join('') + '</ul>'); ul = []; } }
+    lines.forEach(function (l) {
+      var t = l.trim();
+      if (/^\|.*\|$/.test(t)) { flushU(); tbl.push(t); return; }
+      flushT();
+      if (/^[-*•]\s+/.test(t)) { ul.push('<li>' + inline(t.replace(/^[-*•]\s+/, '')) + '</li>'); return; }
+      flushU();
+      if (/^-{3,}$/.test(t)) out.push('<hr>');
+      else if (/^#{1,6}\s/.test(t)) out.push('<h4>' + inline(t.replace(/^#+\s*/, '')) + '</h4>');
+      else if (t) out.push('<div>' + inline(t) + '</div>');
+    });
+    flushT(); flushU();
+    return out.join('');
+  }
+
+  /* ---------------- Shell ---------------- */
+  var VIEWS = [['overview', 'Overview'], ['outstanding', 'Outstanding Tracker'], ['notes', '1:1 Meeting Notes'], ['actions', 'Action Items']];
+
+  function renderNav() {
+    var counts = { outstanding: S.data.outstanding.filter(isOpen).length, notes: S.data.notes.length, actions: openActions().length };
+    $('nav').innerHTML = VIEWS.map(function (v) {
+      var on = S.view === v[0] ? ' on' : '';
+      var badge = counts[v[0]] != null ? '<span class="badge">' + counts[v[0]] + '</span>' : '';
+      return '<button type="button" class="nav-item' + on + '" data-act="view" data-v="' + v[0] + '"><span class="grow">' + v[1] + '</span>' + badge + '</button>';
+    }).join('');
+    $('deptNav').innerHTML = DEPTS.map(function (d) {
+      var on = S.view === 'dept' && S.dept === d.key ? ' on' : '';
+      return '<button type="button" class="dept-item' + on + '" data-act="dept" data-d="' + esc(d.key) + '"><span class="dot" style="background:' + d.color + '"></span>' + esc(d.key) + '</button>';
+    }).join('');
+  }
+
+  function render() {
+    if (!S.data) return;
+    renderNav();
+    var titles = { overview: 'Ops Weekly Dashboard', outstanding: 'Outstanding Tracker', notes: '1:1 Meeting Notes', actions: 'Action Items' };
+    $('viewTitle').textContent = S.view === 'dept' ? deptOf(S.dept).label : titles[S.view];
+    var lu = S.data.meta.lastUpdate;
+    $('subTitle').textContent = S.data.meta.weekLabel + (lu ? ' · Last updated by ' + lu.by + ', ' + lu.at : '');
+    $('addLabel').textContent = { notes: 'New note', actions: 'New action item' }[S.view] || 'Add outstanding';
+    var html = { overview: vOverview, outstanding: vOutstanding, notes: vNotes, actions: vActions, dept: vDept }[S.view]();
+    $('content').innerHTML = html;
+  }
+
+  /* ---------------- Views ---------------- */
+  function vOverview() {
+    var open = S.data.outstanding.filter(isOpen);
+    var overdue = open.filter(function (r) { var d = days(r.target); return d !== null && d < 0; })
+      .sort(function (a, b) { return days(a.target) - days(b.target); });
+    var oa = openActions();
+    var p1 = oa.filter(function (a) { return prioN(a.priority) === 1; }).length;
+    var fresh = DEPTS.map(function (d) {
+      var n = notesSorted().filter(function (x) { return has(x.category, d.cat); })[0];
+      return { d: d, n: n, age: n ? -days(n.date) : null };
+    });
+    var thisWeek = fresh.filter(function (f) { return f.age !== null && f.age <= 7; });
+    var missing = fresh.filter(function (f) { return f.age === null || f.age > 7; }).map(function (f) { return f.d.key; });
+
+    var kpis = [
+      ['Open outstanding', open.length, 'of ' + S.data.outstanding.length + ' items total', ''],
+      ['Overdue', overdue.length, overdue.length ? 'needs follow-up this week' : 'all on track', overdue.length ? 'bad' : ''],
+      ['Open P1 action items', p1, oa.length + ' action items not done', ''],
+      ['1:1 notes (last 7 days)', thisWeek.length + ' / ' + DEPTS.length, missing.length ? 'Missing: ' + missing.join(', ') : 'All departments done', '']
+    ];
+    var maxA = 1;
+    var areas = AREAS.map(function (a) {
+      var xs = oa.filter(function (x) { return x.area === a; });
+      maxA = Math.max(maxA, xs.length);
+      return { a: a, xs: xs };
+    });
+    var bars = areas.map(function (o) {
+      function seg(p, c) { var k = o.xs.filter(function (x) { return prioN(x.priority) === p; }).length; return '<span style="background:' + c + ';width:' + (k / maxA * 100) + '%"></span>'; }
+      return '<div class="bar-row"><span class="bar-name">' + esc(o.a) + '</span><div class="bar">' + seg(1, '#0B3C5D') + seg(2, '#1C8BD1') + seg(3, '#9ED9FB') + '</div><span class="bar-total">' + o.xs.length + '</span></div>';
+    }).join('');
+
+    return '<div class="grid-4">' + kpis.map(function (k) {
+      return '<div class="kpi"><span class="kpi-label">' + k[0] + '</span><span class="kpi-value ' + k[3] + '">' + k[1] + '</span><span class="kpi-note">' + esc(k[2]) + '</span></div>';
+    }).join('') + '</div>' +
+    '<div class="grid-3"><section class="span-2 stack">' +
+      '<div class="card"><div class="card-head"><h2>Overdue items</h2><button type="button" class="link-btn" data-act="view" data-v="outstanding">View all →</button></div>' +
+      (overdue.length ? overdue.slice(0, 8).map(function (r) {
+        return '<div class="row clickable" data-act="editOT" data-id="' + esc(r.id) + '"><span class="late" style="width:90px">' + (-days(r.target)) + ' days</span>' +
+          '<div class="grow"><span class="row-title">' + esc(r.title) + '</span><span class="row-sub">' + esc(r.client || '—') + ' · ' + esc(r.dept) + '</span></div>' + blockPill(r.blocking) + '</div>';
+      }).join('') : '<div class="empty">No overdue items.</div>') + '</div>' +
+      '<div class="card"><div class="card-head"><h2>Open priorities by area</h2><span class="muted">Action items not done</span></div>' + bars +
+      '<div class="legend"><span><i style="background:#0B3C5D"></i>P1 Critical</span><span><i style="background:#1C8BD1"></i>P2 Important</span><span><i style="background:#9ED9FB"></i>P3 Strategic</span></div></div>' +
+    '</section><section class="stack">' +
+      '<div class="card"><h2 style="padding-bottom:8px">Department updates</h2>' + fresh.map(function (f) {
+        var stale = f.age === null || f.age > 14;
+        return '<div class="row" style="padding:8px 0"><span class="dot" style="background:' + (stale ? '#B42318' : '#1E8A5A') + '"></span><span class="grow" style="font-size:14px;color:#1F2A33">' + esc(f.d.label) + '</span>' +
+          '<span style="font-size:12px;font-weight:600;color:' + (stale ? '#B42318' : '#545454') + '">' + (f.n ? fShort(f.n.date) : 'No notes yet') + '</span></div>';
+      }).join('') + '</div>' +
+      '<div class="card"><div class="card-head"><h2>Latest 1:1 notes</h2><button type="button" class="link-btn" data-act="view" data-v="notes">Open →</button></div>' +
+      notesSorted().slice(0, 4).map(function (n) {
+        return '<div class="row clickable top-align" style="padding:8px 0" data-act="openNote" data-id="' + esc(n.id) + '"><div class="grow"><span class="row-title">' + esc(n.name) + '</span><span class="row-sub">' + fLong(n.date) + (n.attendees ? ' · ' + esc(n.attendees) : '') + '</span></div></div>';
+      }).join('') + '</div>' +
+    '</section></div>';
+  }
+
+  function vOutstanding() {
+    var chips = ['All'].concat(DEPTS.map(function (d) { return d.key; }), ['Closed / archived']);
+    var rows = S.data.outstanding.filter(function (r) {
+      if (S.filterDept === 'Closed / archived') return !isOpen(r);
+      if (!isOpen(r)) return false;
+      if (S.filterDept !== 'All' && !has(r.dept, deptOf(S.filterDept).ot)) return false;
+      return match(r, ['title', 'client', 'next', 'notes', 'dept', 'person']);
+    }).sort(function (a, b) {
+      var da = days(a.target), db = days(b.target);
+      return (da === null ? 1e9 : da) - (db === null ? 1e9 : db) || String(b.raised).localeCompare(String(a.raised));
+    });
+    if (S.filterDept === 'Closed / archived') rows = rows.filter(function (r) { return match(r, ['title', 'client', 'next', 'notes', 'dept']); });
+    return '<div class="chips">' + chips.map(function (c) {
+      return '<button type="button" class="chip' + (S.filterDept === c ? ' on' : '') + '" data-act="filter" data-f="' + esc(c) + '">' + esc(c) + '</button>';
+    }).join('') + '<span class="muted" style="margin-left:auto">' + rows.length + ' items</span></div>' +
+    '<div class="table"><div class="tr head"><span>OUTSTANDING</span><span>DEPARTMENT</span><span>BLOCKING</span><span>NEXT ACTION</span><span>RAISED</span><span>TARGET</span></div>' +
+    (rows.length ? rows.map(function (r) {
+      return '<div class="tr body" data-act="editOT" data-id="' + esc(r.id) + '">' +
+        '<div style="display:flex;flex-direction:column;gap:3px"><span class="row-title">' + esc(r.title) + '</span><span class="row-sub">' + esc(r.client || '—') + (r.person ? ' · PIC ' + esc(r.person) : '') + '</span></div>' +
+        '<span class="cell">' + esc(r.dept) + '</span><span>' + blockPill(r.blocking) + '</span>' +
+        '<span class="cell" style="white-space:pre-line">' + esc(r.next || '—') + '</span>' +
+        '<span class="cell">' + fShort(r.raised) + '</span><span>' + dueLabel(r.target, !isOpen(r)) + '</span></div>';
+    }).join('') : '<div style="padding:22px"><div class="empty">No items.</div></div>') + '</div>';
+  }
+
+  function vNotes() {
+    var ns = notesSorted().filter(function (n) { return match(n, ['name', 'category', 'body', 'done', 'nextWeek', 'attendees']); });
+    if (!ns.length) return '<div class="empty">' + (S.q ? 'No notes match your search.' : 'No notes yet.') + '</div>';
+    var cur = ns.filter(function (n) { return n.id === S.noteId; })[0] || ns[0];
+    S.noteId = cur.id;
+    return '<div class="grid-3"><div class="note-list">' + ns.map(function (n) {
+      return '<button type="button" class="note-item' + (n.id === cur.id ? ' on' : '') + '" data-act="openNote" data-id="' + esc(n.id) + '"><span class="row-title">' + esc(n.name) + '</span><span class="row-sub">' + fLong(n.date) + ' · ' + esc(n.category) + '</span></button>';
+    }).join('') + '</div><article class="note span-2">' + noteDetail(cur) + '</article></div>';
+  }
+
+  function noteDetail(n) {
+    var done = list2(n.done), next = list2(n.nextWeek);
+    var h = '<div style="display:flex;align-items:flex-start;gap:12px"><div style="display:flex;flex-direction:column;gap:4px;flex-grow:1">' +
+      '<span class="note-cat">' + esc(n.category || 'Uncategorized') + '</span><h2>' + esc(n.name) + '</h2>' +
+      '<span class="muted">' + fLong(n.date) + (n.attendees ? ' · Attendees: ' + esc(n.attendees) : '') + (n.by ? ' · Edited by ' + esc(n.by) + ' ' + esc(n.at) : '') + '</span></div>' +
+      '<button type="button" class="btn small" data-act="editNote" data-id="' + esc(n.id) + '">Edit note</button></div>';
+    if (done.length) h += '<h3 class="done">Done This Week</h3>' + done.map(function (d) { return '<div class="done-item">' + ICON_CHECK + '<span>' + esc(d) + '</span></div>'; }).join('');
+    if (next.length) h += '<h3 class="next">Next Week</h3>' + next.map(function (x) {
+      var p = x.split('|'); return '<div class="next-item"><span class="grow">' + esc(p[0].trim()) + '</span>' + (p[1] ? '<span class="pill amber">' + esc(p[1].trim()) + '</span>' : '') + '</div>';
+    }).join('');
+    if (n.body) h += (done.length || next.length ? '<h3>Other notes</h3>' : '') + '<div class="md">' + md(n.body) + '</div>';
+    if (!done.length && !next.length && !n.body) h += '<div class="empty">This note is empty.</div>';
+    return h;
+  }
+  function list2(s) { return String(s || '').split('\n').map(function (x) { return x.replace(/^[-•]\s*/, '').trim(); }).filter(Boolean); }
+
+  function vActions() {
+    var cols = [['Not started', '#6B7680'], ['In progress', '#1C8BD1'], ['Done', '#1E8A5A'], ['Archived', '#9AA5AF']];
+    var st = (S.data.lookups['Action Status'] || []).slice();
+    cols.forEach(function (c) { if (st.indexOf(c[0]) === -1) st.push(c[0]); });
+    return '<div class="board">' + cols.map(function (c) {
+      var cards = S.data.actions.filter(function (a) { return (a.status || 'Not started') === c[0] && match(a, ['title', 'area', 'owner', 'timeline']); })
+        .sort(function (a, b) { return prioN(a.priority) - prioN(b.priority); });
+      return '<div class="col"><div class="col-head"><span class="dot" style="background:' + c[1] + '"></span><span class="grow">' + c[0] + '</span><span>' + cards.length + '</span></div>' +
+        (cards.length ? cards.map(function (a) {
+          var p = prioN(a.priority);
+          return '<div class="ai-card"><div style="display:flex;gap:6px;align-items:center">' + (p < 9 ? '<span class="prio p' + p + '">P' + p + '</span>' : '') + '<span class="row-sub">' + esc(a.area) + '</span></div>' +
+            '<span class="row-title" data-act="editAI" data-id="' + esc(a.id) + '">' + esc(a.title) + '</span>' +
+            '<div class="ai-meta"><span>' + esc(a.owner || '—') + '</span><span class="row-sub">' + esc(a.timeline) + '</span></div>' +
+            '<select aria-label="Change status" data-act="aiStatus" data-id="' + esc(a.id) + '">' + st.map(function (s) { return '<option' + (s === c[0] ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('') + '</select></div>';
+        }).join('') : '<div class="empty">No items yet.</div>') + '</div>';
+    }).join('') + '</div>';
+  }
+
+  function vDept() {
+    var d = deptOf(S.dept);
+    var ot = S.data.outstanding.filter(function (r) { return isOpen(r) && has(r.dept, d.ot); })
+      .sort(function (a, b) { var x = days(a.target), y = days(b.target); return (x === null ? 1e9 : x) - (y === null ? 1e9 : y); });
+    var ai = openActions().filter(function (a) { return a.area === d.area; }).sort(function (a, b) { return prioN(a.priority) - prioN(b.priority); });
+    var ns = notesSorted().filter(function (n) { return has(n.category, d.cat); });
+    var last = ns[0];
+    var stats = [[ot.length, 'open outstanding', ''], [ai.length, 'open action items', ''], [last ? fShort(last.date) : '—', 'last 1:1 note', last ? '' : 'bad']];
+
+    var left = '<div class="card"><div class="card-head"><h2>Open outstanding</h2><button type="button" class="link-btn" data-act="toTracker">Open in tracker →</button></div>' +
+      (ot.length ? ot.map(function (r) {
+        return '<div class="row top-align clickable" data-act="editOT" data-id="' + esc(r.id) + '"><div class="grow"><span class="row-title">' + esc(r.title) + '</span><span class="row-text" style="white-space:pre-line">' + esc(r.next || '—') + '</span></div>' +
+          '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">' + blockPill(r.blocking) + '<span>' + dueLabel(r.target) + '</span></div></div>';
+      }).join('') : '<div class="empty">No open outstanding items.</div>') + '</div>' +
+      '<div class="card"><div class="card-head"><h2>Action Items</h2><span class="muted">Area ' + esc(d.area) + '</span></div>' +
+      (ai.length ? ai.map(function (a) {
+        var p = prioN(a.priority);
+        return '<div class="row clickable" data-act="editAI" data-id="' + esc(a.id) + '">' + (p < 9 ? '<span class="prio p' + p + '">P' + p + '</span>' : '') + '<span class="grow"><span class="row-title" style="font-weight:500">' + esc(a.title) + '</span></span>' +
+          '<span class="row-sub" style="white-space:nowrap;color:#3D4750">' + esc(a.owner) + '</span><span class="row-sub" style="width:96px;text-align:right">' + esc(a.timeline) + '</span></div>';
+      }).join('') : '<div class="empty">No open action items.</div>') + '</div>';
+
+    if (d.key === 'Marketing') left += programsCard();
+
+    var right = '<div class="card"><div class="card-head"><h2>Latest 1:1 note</h2><button type="button" class="link-btn" data-act="view" data-v="notes">All →</button></div>' +
+      (last ? '<div class="last-note clickable" data-act="openNote" data-id="' + esc(last.id) + '"><span class="row-title">' + esc(last.name) + '</span><span class="row-sub">' + fLong(last.date) + (last.attendees ? ' · ' + esc(last.attendees) : '') + '</span>' + lastNoteSummary(last) + '</div>' +
+        ns.slice(1, 4).map(function (n) { return '<div class="row clickable" style="padding:8px 0" data-act="openNote" data-id="' + esc(n.id) + '"><span class="grow"><span class="row-title" style="font-weight:500;font-size:13px">' + esc(n.name) + '</span></span><span class="row-sub">' + fLong(n.date) + '</span></div>'; }).join('')
+      : '<div class="warn-box"><span style="font-size:14px;font-weight:700;color:#B42318">No 1:1 notes yet</span><span class="row-text">This department has no weekly meeting notes yet.</span><button type="button" class="btn small primary" style="align-self:flex-start" data-act="newNote" data-cat="' + esc(d.cat[0]) + '">Create first note</button></div>') + '</div>';
+    if (d.key === 'Marketing') right += tasksCard();
+
+    return '<div class="card dept-head"><span class="dept-bar" style="background:' + d.color + '"></span><div style="display:flex;flex-direction:column;gap:4px;flex-grow:1"><span class="row-text" style="font-size:14px">' + esc(d.purpose) + '</span><span class="row-sub">Weekly review · ' + esc(d.cadence) + '</span></div>' +
+      stats.map(function (s) { return '<div class="stat"><b class="' + s[2] + '">' + esc(s[0]) + '</b><span>' + s[1] + '</span></div>'; }).join('') + '</div>' +
+      '<div class="grid-3"><section class="span-2 stack">' + left + '</section><section class="stack">' + right + '</section></div>';
+  }
+
+  // Ambil item "Done" & "Next week" dari tabel catatan lama Notion
+  function parseLegacy(body) {
+    var res = { done: [], next: [] }, sec = null, first = false;
+    String(body || '').split('\n').forEach(function (l) {
+      var t = l.trim();
+      if (/^#{1,6}\s/.test(t)) { sec = /done/i.test(t) ? 'done' : (/next/i.test(t) ? 'next' : null); first = true; return; }
+      if (sec && /^\|.*\|$/.test(t)) {
+        if (first) { first = false; return; }
+        var c = t.replace(/^\||\|$/g, '').split('|').map(function (x) { return x.trim(); });
+        if (c[0]) res[sec].push(c[0] + (sec === 'next' && c[1] ? ' | ' + c[1] : ''));
+      } else if (sec && /^[-*•]\s+/.test(t)) res[sec].push(t.replace(/^[-*•]\s+/, ''));
+    });
+    return res;
+  }
+
+  function lastNoteSummary(n) {
+    var done = list2(n.done), next = list2(n.nextWeek);
+    if (!done.length && !next.length) { var lg = parseLegacy(n.body); done = lg.done; next = lg.next; }
+    if (!done.length && !next.length) {
+      var txt = String(n.body || '').replace(/[#|*]/g, ' ').replace(/\s+/g, ' ').trim();
+      return '<span class="row-text">' + esc(txt.slice(0, 220)) + (txt.length > 220 ? '…' : '') + '</span>';
+    }
+    return (done.length ? '<span class="small-label" style="color:#1E6B45">DONE</span>' + done.slice(0, 4).map(function (x) { return '<span class="row-text">• ' + esc(x) + '</span>'; }).join('') : '') +
+      (next.length ? '<span class="small-label" style="color:#005A8C">NEXT WEEK</span>' + next.slice(0, 4).map(function (x) { return '<span class="row-text">• ' + esc(x.split('|')[0].trim()) + '</span>'; }).join('') : '');
+  }
+
+  function shortClinic(c) { return String(c || '').replace(/IHC /g, '').replace('Partner Site ', 'Site '); }
+
+  function programsCard() {
+    var ps = S.data.programs;
+    var h = '<div class="card"><div class="card-head"><div style="display:flex;flex-direction:column;gap:4px"><h2>Active Programs</h2><span class="source">' + ICON_SYNC + 'Marketing Hub · tab Marketing Programs</span></div><span class="muted" style="font-weight:600">' + ps.length + ' active · newest first</span></div>';
+    if (S.data.hubError) return h + '<div class="empty">' + esc(S.data.hubError) + '</div></div>';
+    if (!ps.length) return h + '<div class="empty">No programs with Active status.</div></div>';
+    return h + ps.map(function (p) {
+      var d = days(p.end), flag = '';
+      if (d !== null && d < 0) flag = '<span class="pill sm red">Period ended — check status</span>';
+      else if (d !== null && d <= 14) flag = '<span class="pill sm amber">' + (d === 0 ? 'Ends today' : 'Ends in ' + d + ' days') + '</span>';
+      return '<div class="row"><div class="grow"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="row-title">' + esc(p.name) + '</span>' + flag + '</div>' +
+        '<span class="row-sub">' + esc(String(p.category || '').replace('Marketing - ', '')) + ' · ' + esc(shortClinic(p.clinics)) + '</span></div>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;width:120px;flex-shrink:0"><span class="row-sub">Starts ' + fLong(p.start) + '</span><span style="font-size:13px;font-weight:600;color:#1F2A33">' + (p.end ? 'until ' + fLong(p.end) : 'Ongoing') + '</span></div></div>';
+    }).join('') + '<div style="padding-top:10px"><a href="https://docs.google.com/spreadsheets/d/' + '1n4MO3I3GzmzAxXgmGpkOVWBqa6mjkuOrdxr1O3yB6Wg' + '/edit" target="_blank" rel="noopener" style="font-size:13px;font-weight:700;text-decoration:none">Open Google Sheet ↗</a></div></div>';
+  }
+
+  function tasksCard() {
+    var ts = S.data.tasks.slice().sort(function (a, b) { var x = days(a.due), y = days(b.due); return (x === null ? 1e9 : x) - (y === null ? 1e9 : y); });
+    var late = ts.filter(function (t) { var d = days(t.due); return d !== null && d < 0; }).length;
+    var h = '<div class="card"><div style="display:flex;flex-direction:column;gap:4px;padding-bottom:8px"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><h2>Open Project Tasks</h2><span class="muted" style="font-weight:600">' + ts.length + ' open · ' + late + ' overdue</span></div><span class="source">' + ICON_SYNC + 'Marketing Hub · tab Marketing Project Tasks</span></div>';
+    if (S.data.hubError) return h + '<div class="empty">' + esc(S.data.hubError) + '</div></div>';
+    if (!ts.length) return h + '<div class="empty">All tasks are done.</div></div>';
+    return h + ts.map(function (t) {
+      var ip = String(t.status).toLowerCase() === 'in progress';
+      return '<div class="row top-align" style="flex-direction:column;align-items:stretch;gap:6px"><span class="row-title">' + esc(t.name) + '</span>' +
+        '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="pill sm' + (ip ? ' blue' : '') + '">' + esc(t.status) + '</span><span class="row-sub" style="flex-grow:1">' + esc(t.project || '—') + '</span>' + dueLabel(t.due) + '</div></div>';
+    }).join('') + '</div>';
+  }
+
+  /* ---------------- Forms ---------------- */
+  function withArchived(arr) { arr = (arr || []).slice(); ['Not started', 'In progress', 'Done', 'Archived'].forEach(function (s) { if (arr.indexOf(s) === -1) arr.push(s); }); return arr; }
+  function opts(arr, cur) { return arr.map(function (o) { return '<option' + (o === cur ? ' selected' : '') + '>' + esc(o) + '</option>'; }).join(''); }
+  function checks(name, arr, cur) {
+    var sel = list(cur);
+    var all = arr.concat(sel.filter(function (s) { return arr.indexOf(s) === -1; }));
+    return '<div class="checks">' + all.map(function (o) { return '<label><input type="checkbox" name="' + name + '" value="' + esc(o) + '"' + (sel.indexOf(o) !== -1 ? ' checked' : '') + '>' + esc(o) + '</label>'; }).join('') + '</div>';
+  }
+  function field(label, inner, hint) { return '<label class="field">' + label + inner + (hint ? '<span class="hint">' + hint + '</span>' : '') + '</label>'; }
+  function openDrawer(title, key, id, body) {
+    $('drawer').innerHTML = '<div class="drawer-head"><h2>' + esc(title) + '</h2><button type="button" class="icon-btn" aria-label="Tutup" data-act="close">' + ICON_X + '</button></div>' +
+      '<input type="hidden" name="_key" value="' + key + '"><input type="hidden" name="id" value="' + esc(id || '') + '">' + body +
+      '<span class="hint muted">Saved as <b>' + esc(S.filler || '—') + '</b> (change it at the top right).</span>' +
+      '<div class="drawer-foot"><button type="button" class="btn" data-act="close">Cancel</button><button type="submit" class="btn primary" id="saveBtn">Save</button></div>';
+    $('overlay').hidden = false;
+    var first = $('drawer').querySelector('input[type=text],input[type=date],textarea'); if (first) first.focus();
+  }
+  function closeDrawer() { $('overlay').hidden = true; }
+
+  function formOT(r) {
+    r = r || { blocking: 'Not started', dept: S.view === 'dept' ? deptOf(S.dept).ot[0] : '' };
+    var L = S.data.lookups;
+    openDrawer(r.id ? 'Edit outstanding' : 'Add outstanding', 'outstanding', r.id,
+      field('Outstanding *', '<input type="text" name="title" required value="' + esc(r.title) + '" placeholder="e.g. Contract renewal">') +
+      field('Client', '<input type="text" name="client" value="' + esc(r.client) + '" placeholder="e.g. Partner Site A">') +
+      field('Department', checks('dept', L['Department'], r.dept)) +
+      '<div class="two">' +
+        field('PIC', '<select name="person"><option value="">—</option>' + opts(L['Person'], r.person) + '</select>') +
+        field('Blocking', '<select name="blocking">' + opts(L['Blocking'], r.blocking) + '</select>') +
+        field('Date raised', '<input type="date" name="raised" value="' + esc(r.raised) + '">') +
+        field('Expected timeline', '<input type="date" name="target" value="' + esc(r.target) + '">') +
+      '</div>' +
+      field('Next action', '<textarea name="next" rows="4" placeholder="Next step, who, when">' + esc(r.next) + '</textarea>') +
+      field('Notes', '<textarea name="notes" rows="3">' + esc(r.notes) + '</textarea>'));
+  }
+  function formNote(n, cat) {
+    var L = S.data.lookups;
+    n = n || { date: S.data.meta.today, category: cat || (S.view === 'dept' ? deptOf(S.dept).cat[0] : '') };
+    openDrawer(n.id ? 'Edit 1:1 note' : 'New 1:1 note', 'notes', n.id,
+      '<div class="two">' +
+        field('Date *', '<input type="date" name="date" required value="' + esc(n.date) + '">') +
+        field('Department *', '<select name="category" required><option value="">Select…</option>' + opts(L['Meeting Category'], n.category) + '</select>') +
+      '</div>' +
+      field('Title', '<input type="text" name="name" value="' + esc(n.name) + '" placeholder="Leave blank for auto, e.g. 2026-09-25 | Marketing Weekly">') +
+      field('Attendees', checks('attendees', L['Person'], n.attendees)) +
+      field('Done This Week', '<textarea name="done" rows="4" placeholder="One item per line">' + esc(n.done) + '</textarea>') +
+      field('Next Week', '<textarea name="nextWeek" rows="4" placeholder="One item per line. Add a target with |, e.g. Send flyer to GA | Monday">' + esc(n.nextWeek) + '</textarea>') +
+      field('Other notes', '<textarea name="body" rows="' + (n.body ? 10 : 4) + '">' + esc(n.body) + '</textarea>', n.url ? 'Original Notion notes are kept in this field.' : ''));
+  }
+  function formAI(a) {
+    var L = S.data.lookups;
+    a = a || { status: 'Not started', area: S.view === 'dept' ? deptOf(S.dept).area : '' };
+    openDrawer(a.id ? 'Edit action item' : 'New action item', 'actions', a.id,
+      field('Action item *', '<input type="text" name="title" required value="' + esc(a.title) + '">') +
+      '<div class="two">' +
+        field('Area', '<select name="area"><option value="">—</option>' + opts(L['Area'], a.area) + '</select>') +
+        field('Priority', '<select name="priority"><option value="">—</option>' + opts(L['Priority'], a.priority) + '</select>') +
+        field('Status', '<select name="status">' + opts(withArchived(L['Action Status']), a.status) + '</select>') +
+        field('Timeline', '<input type="text" name="timeline" value="' + esc(a.timeline) + '" placeholder="This week / Oct 2026">') +
+      '</div>' +
+      field('Owner', checks('owner', L['Person'], a.owner)));
+  }
+
+  function collect(form) {
+    var o = {}, fd = form.elements;
+    for (var i = 0; i < fd.length; i++) {
+      var el = fd[i]; if (!el.name) continue;
+      if (el.type === 'checkbox') { o[el.name] = o[el.name] || []; if (el.checked) o[el.name].push(el.value); }
+      else o[el.name] = el.value.trim();
+    }
+    Object.keys(o).forEach(function (k) { if (Array.isArray(o[k])) o[k] = o[k].join(', '); });
+    return o;
+  }
+
+  function save(key, obj, done) {
+    if (!S.filler) { $('filler').classList.add('need'); $('filler').focus(); toast('Select your name at the top right first.', true); return; }
+    google.script.run
+      .withSuccessHandler(function (id) { toast('Saved (' + id + ')'); if (done) done(id); load(); })
+      .withFailureHandler(function (e) { toast('Failed to save: ' + (e && e.message ? e.message : e), true); var b = $('saveBtn'); if (b) { b.disabled = false; b.textContent = 'Save'; } })
+      .saveRecord(key, obj, S.filler);
+  }
+
+  /* ---------------- Events ---------------- */
+  document.addEventListener('click', function (ev) {
+    var el = ev.target.closest('[data-act]'); if (!el || el.tagName === 'SELECT') return;
+    var a = el.getAttribute('data-act'), id = el.getAttribute('data-id');
+    var find = function (arr) { return arr.filter(function (x) { return x.id === id; })[0]; };
+    if (a === 'view') { S.view = el.getAttribute('data-v'); if (S.view === 'outstanding') S.filterDept = 'All'; window.scrollTo(0, 0); render(); }
+    else if (a === 'dept') { S.view = 'dept'; S.dept = el.getAttribute('data-d'); window.scrollTo(0, 0); render(); }
+    else if (a === 'filter') { S.filterDept = el.getAttribute('data-f'); render(); }
+    else if (a === 'toTracker') { S.view = 'outstanding'; S.filterDept = S.dept; render(); }
+    else if (a === 'openNote') { S.view = 'notes'; S.noteId = id; S.q = ''; $('search').value = ''; render(); }
+    else if (a === 'editOT') formOT(find(S.data.outstanding));
+    else if (a === 'editNote') formNote(find(S.data.notes));
+    else if (a === 'newNote') formNote(null, el.getAttribute('data-cat'));
+    else if (a === 'editAI') formAI(find(S.data.actions));
+    else if (a === 'close') closeDrawer();
+  });
+  document.addEventListener('change', function (ev) {
+    var el = ev.target;
+    if (el.getAttribute && el.getAttribute('data-act') === 'aiStatus') {
+      var id = el.getAttribute('data-id'), v = el.value;
+      var rec = S.data.actions.filter(function (x) { return x.id === id; })[0];
+      if (!S.filler) { el.value = rec.status; save('actions', {}); return; }
+      rec.status = v; render();
+      save('actions', { id: id, status: v });
+    }
+  });
+  $('overlay').addEventListener('click', function (ev) { if (ev.target === $('overlay')) closeDrawer(); });
+  document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && !$('overlay').hidden) closeDrawer(); });
+  $('drawer').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var o = collect(ev.target), key = o._key; delete o._key;
+    if (key === 'notes' && !o.name) o.name = o.date + ' | ' + o.category + ' Weekly';
+    var b = $('saveBtn'); b.disabled = true; b.textContent = 'Saving…';
+    save(key, o, function (newId) { closeDrawer(); if (key === 'notes') { S.view = 'notes'; S.noteId = newId; } });
+  });
+  $('addBtn').addEventListener('click', function () {
+    if (S.view === 'notes') formNote(); else if (S.view === 'actions') formAI(); else formOT();
+  });
+  $('search').addEventListener('input', function (ev) {
+    S.q = ev.target.value.trim();
+    if (S.q && (S.view === 'overview' || S.view === 'dept')) { S.view = 'outstanding'; S.filterDept = 'All'; }
+    render();
+  });
+  $('filler').addEventListener('change', function (ev) { S.filler = ev.target.value; lsSet('okFiller', S.filler); ev.target.classList.remove('need'); });
+
+  /* ---------------- Load ---------------- */
+  function load() {
+    google.script.run
+      .withSuccessHandler(function (d) {
+        S.data = d;
+        if (!S.filler) { S.filler = lsGet('okFiller') || d.meta.viewer || ''; $('filler').value = S.filler; }
+        render();
+      })
+      .withFailureHandler(function (e) { $('content').innerHTML = '<div class="empty">Failed to load data: ' + esc(e && e.message ? e.message : e) + '</div>'; })
+      .getData();
+  }
+  load();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Campaign Evaluation · Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#34B6F8;
+    --navy:#2B3A8F;
+    --charcoal:#545454;
+    --lightblue:#EBF7FE;
+    --bluedark:#0077B6;
+    --white:#FFFFFF;
+    --good:#2E9E5B;
+    --warn:#E0A100;
+    --danger:#D64545;
+    --grey:#E4E7EB;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Poppins',Arial,sans-serif;
+    background:var(--lightblue);
+    color:var(--charcoal);
+    padding:24px;
+  }
+  .wrap{max-width:1140px;margin:0 auto;}
+  header{margin-bottom:20px;}
+  header h1{color:var(--navy);font-size:21px;margin:0 0 4px 0;font-weight:600;}
+  header .sub{font-size:12.5px;color:var(--charcoal);opacity:0.8;}
+  header .sub .sub-seg{white-space:nowrap;display:inline-block;}
+
+  .summary-row{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px;
+  }
+  .summary-card{
+    background:var(--white);border-radius:10px;padding:14px 16px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.06);
+  }
+  .summary-card .label{font-size:10.5px;color:var(--charcoal);opacity:0.7;text-transform:uppercase;letter-spacing:.03em;}
+  .summary-card .value{font-size:25px;font-weight:600;color:var(--navy);margin-top:2px;}
+  .summary-card .value.small{font-size:16px;}
+
+  .section-title{
+    font-size:14.5px;font-weight:600;color:var(--navy);margin:26px 0 10px 0;
+    display:flex;align-items:center;gap:8px;
+  }
+  .section-hint{font-size:11.5px;color:var(--charcoal);opacity:.7;font-weight:400;margin:-6px 0 12px 0;}
+
+  .chart-card{
+    background:var(--white);border-radius:10px;padding:20px 22px;box-shadow:0 1px 3px rgba(0,0,0,0.06);
+    margin-bottom:10px;
+  }
+
+  .trend-chart{display:flex;flex-direction:column;gap:20px;padding:0 6px;}
+  .trend-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:18px;}
+  .trend-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:0 0 auto;height:150px;}
+  .trend-value{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:4px;}
+  .trend-bar{width:44px;background:var(--blue);border-radius:5px 5px 0 0;min-height:4px;}
+  .trend-label{font-size:11px;color:var(--charcoal);margin-top:6px;text-align:center;white-space:nowrap;}
+
+  .overview-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .overview-name{width:130px;flex-shrink:0;font-size:12.5px;font-weight:500;}
+  .overview-track{flex:1;height:16px;background:var(--grey);border-radius:8px;overflow:hidden;display:flex;}
+  .overview-fill-actual{height:100%;background:var(--blue);}
+  .overview-fill-actual.ahead{background:var(--good);}
+  .overview-fill-actual.risk{background:var(--danger);}
+  .overview-num{width:80px;flex-shrink:0;text-align:right;font-size:12px;font-weight:600;color:var(--navy);}
+  .overview-num-only{flex:1;font-size:12.5px;color:var(--charcoal);}
+
+  .clinic-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;
+  }
+  .clinic-card{
+    background:var(--white);border-radius:10px;padding:16px 18px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.06);border-left:4px solid var(--grey);
+  }
+  .clinic-card.status-ahead{border-left-color:var(--good);}
+  .clinic-card.status-ontrack{border-left-color:var(--blue);}
+  .clinic-card.status-risk{border-left-color:var(--danger);}
+  .clinic-card .top-row{display:flex;justify-content:space-between;align-items:flex-start;}
+  .clinic-card h3{margin:0;font-size:15px;color:var(--charcoal);font-weight:600;}
+  .pill{font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px;color:#fff;white-space:nowrap;}
+  .pill.ahead{background:var(--good);}
+  .pill.ontrack{background:var(--blue);}
+  .pill.risk{background:var(--danger);}
+  .pill.info{background:var(--charcoal);}
+
+  .metrics-line{display:flex;gap:18px;margin:10px 0 8px 0;font-size:11.5px;}
+  .metrics-line b{display:block;font-size:17px;color:var(--navy);}
+  .metrics-line .info-icon{
+    cursor:help;font-size:10px;color:var(--bluedark);border:1px solid var(--bluedark);
+    border-radius:50%;width:13px;height:13px;display:inline-flex;align-items:center;justify-content:center;
+    margin-left:3px;vertical-align:top;
+  }
+
+  .progress-track{
+    height:14px;background:var(--grey);border-radius:7px;overflow:hidden;position:relative;margin:8px 0 6px 0;
+  }
+  .progress-fill{height:100%;background:var(--blue);border-radius:7px 0 0 7px;}
+  .progress-fill.ahead{background:var(--good);}
+  .progress-fill.risk{background:var(--danger);}
+  .target-marker{
+    position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--navy);
+  }
+  .gap-line{font-size:12px;margin-top:6px;}
+  .gap-line .num{font-weight:700;color:var(--navy);}
+
+  .breakdown-table{width:100%;border-collapse:collapse;margin:10px 0 4px 0;font-size:11.5px;}
+  .breakdown-table td{padding:4px 2px;border-bottom:1px dashed var(--grey);}
+  .breakdown-table td.num{text-align:right;font-weight:600;color:var(--navy);}
+
+  .week-history{font-size:11px;margin:8px 0 4px 0;color:var(--charcoal);opacity:.85;}
+  .week-history .wk-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:2px 0;}
+  .week-history .wk-row .wk-label-tag{white-space:nowrap;font-weight:400;}
+  .week-history .wk-row > span:last-child{white-space:nowrap;text-align:right;}
+
+  .flag-note{
+    margin-top:10px;background:#FFF6E5;border:1px solid #F4DFA8;border-radius:6px;
+    padding:7px 9px;font-size:11px;color:#7A5B00;line-height:1.5;
+  }
+  .flag-note + .flag-note{margin-top:6px;}
+  .flag-note .wk-label-tag{white-space:nowrap;font-weight:600;}
+
+  .rec-list{background:var(--white);border-radius:10px;padding:16px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+  .rec-list ol,.rec-list ul{margin:0;padding-left:18px;}
+  .rec-list li{margin-bottom:9px;font-size:13px;line-height:1.5;}
+  .rec-list li b{color:var(--navy);font-weight:400;}
+
+  .footnote{
+    margin-top:24px;font-size:11px;color:var(--charcoal);opacity:0.75;line-height:1.6;
+    border-top:1px solid var(--grey);padding-top:10px;
+  }
+  .footnote b{color:var(--navy);}
+
+  footer{margin-top:14px;font-size:11px;color:var(--charcoal);opacity:0.65;text-align:center;}
+
+  /* ---- Mobile (Android & iPhone) ---- */
+  @media (max-width: 640px){
+    body{padding:14px;}
+    header h1{font-size:17px;}
+    header .sub{font-size:11.5px;}
+    .summary-row{grid-template-columns:repeat(2,1fr);gap:8px;}
+    .summary-card{padding:10px 12px;}
+    .summary-card .value{font-size:20px;}
+    .chart-card{padding:14px 12px;}
+    .trend-chart{gap:14px;}
+    .trend-row{gap:8px;}
+    .trend-col{height:120px;}
+    .trend-bar{width:26px;}
+    .trend-label{font-size:9.5px;white-space:nowrap;}
+    .overview-row{gap:6px;}
+    .overview-name{width:78px;font-size:10.5px;}
+    .overview-num{width:56px;font-size:10.5px;}
+    .clinic-grid{grid-template-columns:1fr;}
+    .clinic-card{padding:14px;}
+    .metrics-line{gap:12px;flex-wrap:wrap;}
+    .breakdown-table{font-size:11px;}
+  }
+  @media (max-width: 380px){
+    .summary-row{grid-template-columns:1fr 1fr;}
+    .trend-bar{width:20px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div style="background:#FFF6E0;border:1px solid #F2D9A0;color:#7A5A12;border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:18px;">Demo with dummy data. The real evaluation is generated every week during a campaign and as a final report at the end. All site names and figures are fictional.</div>
+  <header>
+    <h1>Final Evaluation — Summer Wellness Promo</h1>
+    <div class="sub"><span class="sub-seg">Campaign period: 1 August – 30 September 2026</span> · <span class="sub-seg">Prepared 1 October 2026</span></div>
+  </header>
+  <div class="summary-row">
+    <div class="summary-card"><div class="label">Total transactions</div><div class="value">71</div></div>
+    <div class="summary-card"><div class="label">Final target</div><div class="value">60</div></div>
+    <div class="summary-card"><div class="label">Remaining to target</div><div class="value" style="color:#D64545;">0</div></div>
+    <div class="summary-card"><div class="label">Status</div><div class="value small">Completed <span style="font-size:11px;font-weight:400;opacity:.7;">(30 September 2026)</span></div></div>
+  </div>
+  <div class="section-title">📈 Weekly transactions (all sites)</div>
+  <div class="section-hint">A new bar is added each time the weekly evaluation is generated.</div>
+  <div class="chart-card"><div class="trend-chart"><div class="trend-row"><div class="trend-col"><div class="trend-value">5</div><div class="trend-bar" style="height:50.0%"></div><div class="trend-label">Week 1 (1–9 Aug)</div></div><div class="trend-col"><div class="trend-value">8</div><div class="trend-bar" style="height:80.0%"></div><div class="trend-label">Week 2 (10–16 Aug)</div></div><div class="trend-col"><div class="trend-value">10</div><div class="trend-bar" style="height:100.0%"></div><div class="trend-label">Week 3 (17–23 Aug)</div></div><div class="trend-col"><div class="trend-value">8</div><div class="trend-bar" style="height:80.0%"></div><div class="trend-label">Week 4 (24–30 Aug)</div></div></div><div class="trend-row"><div class="trend-col"><div class="trend-value">10</div><div class="trend-bar" style="height:100.0%"></div><div class="trend-label">Week 5 (31 Aug–6 Sep)</div></div><div class="trend-col"><div class="trend-value">7</div><div class="trend-bar" style="height:70.0%"></div><div class="trend-label">Week 6 (7–13 Sep)</div></div><div class="trend-col"><div class="trend-value">8</div><div class="trend-bar" style="height:80.0%"></div><div class="trend-label">Week 7 (14–20 Sep)</div></div><div class="trend-col"><div class="trend-value">7</div><div class="trend-bar" style="height:70.0%"></div><div class="trend-label">Week 8 (21–27 Sep)</div></div><div class="trend-col"><div class="trend-value">8</div><div class="trend-bar" style="height:80.0%"></div><div class="trend-label">Week 9 (28–30 Sep)</div></div></div></div></div>
+  <div class="section-title">📊 Progress per site — actual vs final target</div>
+  <div class="chart-card"><div class="overview-row"><div class="overview-name">Main Clinic</div><div class="overview-track"><div class="overview-fill-actual ahead" style="width:100%"></div></div><div class="overview-num">34 / 30</div></div><div class="overview-row"><div class="overview-name">Partner Site A</div><div class="overview-track"><div class="overview-fill-actual ahead" style="width:100%"></div></div><div class="overview-num">19 / 15</div></div><div class="overview-row"><div class="overview-name">Partner Site B</div><div class="overview-track"><div class="overview-fill-actual ahead" style="width:100%"></div></div><div class="overview-num">12 / 10</div></div><div class="overview-row"><div class="overview-name">Partner Site C</div><div class="overview-track"><div class="overview-fill-actual ahead" style="width:100%"></div></div><div class="overview-num">6 / 5</div></div></div>
+  <div class="section-title">🏥 Detail per site</div>
+  <div class="clinic-grid"><div class="clinic-card status-ahead"><div class="top-row"><h3>Main Clinic</h3><span class="pill ahead">TARGET REACHED</span></div><div class="metrics-line"><div>Actual<b>34</b></div><div>Final target<b>30</b></div><div>Pace <span class="info-icon" title="Pace = actual divided by the target pro-rated to the current day">i</span><b>113%</b></div></div><div class="progress-track"><div class="progress-fill ahead" style="width:100%"></div><div class="target-marker" style="left:100%" title="Target on day 61"></div></div><div class="gap-line">Final target reached</div><table class="breakdown-table"><tr><td>Vitamin C Shot</td><td class="num">12</td></tr><tr><td>Vitamin C Drip</td><td class="num">5</td></tr><tr><td>Vitamin B Shot</td><td class="num">9</td></tr><tr><td>Energy Drip</td><td class="num">6</td></tr><tr><td>Mood Booster</td><td class="num">2</td></tr></table><div class="week-history"><div class="wk-row"><span>Week 1 (1–9 Aug)</span><span><b>2</b> transactions</span></div><div class="wk-row"><span>Week 2 (10–16 Aug)</span><span><b>4</b> transactions</span></div><div class="wk-row"><span>Week 3 (17–23 Aug)</span><span><b>5</b> transactions</span></div><div class="wk-row"><span>Week 4 (24–30 Aug)</span><span><b>4</b> transactions</span></div><div class="wk-row"><span>Week 5 (31 Aug–6 Sep)</span><span><b>5</b> transactions</span></div><div class="wk-row"><span>Week 6 (7–13 Sep)</span><span><b>3</b> transactions</span></div><div class="wk-row"><span>Week 7 (14–20 Sep)</span><span><b>4</b> transactions</span></div><div class="wk-row"><span>Week 8 (21–27 Sep)</span><span><b>3</b> transactions</span></div><div class="wk-row"><span>Week 9 (28–30 Sep)</span><span><b>4</b> transactions</span></div></div><div class="flag-note">⚠️ Week 6 (7–13 Sep): 2 transactions entered without the promo discount — front desk re-briefed.</div></div><div class="clinic-card status-ahead"><div class="top-row"><h3>Partner Site A</h3><span class="pill ahead">TARGET REACHED</span></div><div class="metrics-line"><div>Actual<b>19</b></div><div>Final target<b>15</b></div><div>Pace <span class="info-icon" title="Pace = actual divided by the target pro-rated to the current day">i</span><b>127%</b></div></div><div class="progress-track"><div class="progress-fill ahead" style="width:100%"></div><div class="target-marker" style="left:100%" title="Target on day 61"></div></div><div class="gap-line">Final target reached</div><table class="breakdown-table"><tr><td>Vitamin C Shot</td><td class="num">10</td></tr><tr><td>Vitamin B Shot</td><td class="num">6</td></tr><tr><td>Energy Drip</td><td class="num">3</td></tr></table><div class="week-history"><div class="wk-row"><span>Week 1 (1–9 Aug)</span><span><b>1</b> transactions</span></div><div class="wk-row"><span>Week 2 (10–16 Aug)</span><span><b>2</b> transactions</span></div><div class="wk-row"><span>Week 3 (17–23 Aug)</span><span><b>3</b> transactions</span></div><div class="wk-row"><span>Week 4 (24–30 Aug)</span><span><b>2</b> transactions</span></div><div class="wk-row"><span>Week 5 (31 Aug–6 Sep)</span><span><b>3</b> transactions</span></div><div class="wk-row"><span>Week 6 (7–13 Sep)</span><span><b>2</b> transactions</span></div><div class="wk-row"><span>Week 7 (14–20 Sep)</span><span><b>2</b> transactions</span></div><div class="wk-row"><span>Week 8 (21–27 Sep)</span><span><b>2</b> transactions</span></div><div class="wk-row"><span>Week 9 (28–30 Sep)</span><span><b>2</b> transactions</span></div></div></div><div class="clinic-card status-ahead"><div class="top-row"><h3>Partner Site B</h3><span class="pill ahead">TARGET REACHED</span></div><div class="metrics-line"><div>Actual<b>12</b></div><div>Final target<b>10</b></div><div>Pace <span class="info-icon" title="Pace = actual divided by the target pro-rated to the current day">i</span><b>120%</b></div></div><div class="progress-track"><div class="progress-fill ahead" style="width:100%"></div><div class="target-marker" style="left:100%" title="Target on day 61"></div></div><div class="gap-line">Final target reached</div><table class="breakdown-table"><tr><td>Vitamin B Shot</td><td class="num">9</td></tr><tr><td>Energy Drip</td><td class="num">3</td></tr></table><div class="week-history"><div class="wk-row"><span>Week 1 (1–9 Aug)</span><span><b>2</b> transactions</span></div><div class="wk-row"><span>Week 2 (10–16 Aug)</span><span><b>1</b> transactions</span></div><div class="wk-row"><span>Week 3 (17–23 Aug)</span><span><b>1</b> transactions</span></div><div class="wk-row"><span>Week 4 (24–30 Aug)</span><span><b>2</b> transactions</span></div><div class="wk-row"><span>Week 5 (31 Aug–6 Sep)</span><span><b>1</b> transactions</span></div><div class="wk-row"><span>Week 6 (7–13 Sep)</span><span><b>1</b> transactions</span></div><div class="wk-row"><span>Week 7 (14–20 Sep)</span><span><b>2</b> transactions</span></div><div class="wk-row"><span>Week 8 (21–27 Sep)</span><span><b>1</b> transactions</span></div><div class="wk-row"><span>Week 9 (28–30 Sep)</span><span><b>1</b> transactions</span></div></div><div class="flag-note">⚠️ Week 9 (28–30 Sep): 1 transaction entered without the promo discount.</div></div><div class="clinic-card status-ahead"><div class="top-row"><h3>Partner Site C</h3><span class="pill ahead">TARGET REACHED</span></div><div class="metrics-line"><div>Actual<b>6</b></div><div>Final target<b>5</b></div><div>Pace <span class="info-icon" title="Pace = actual divided by the target pro-rated to the current day">i</span><b>120%</b></div></div><div class="progress-track"><div class="progress-fill ahead" style="width:100%"></div><div class="target-marker" style="left:100%" title="Target on day 61"></div></div><div class="gap-line">Final target reached</div><table class="breakdown-table"><tr><td>Vitamin C Shot</td><td class="num">6</td></tr></table><div class="week-history"><div class="wk-row"><span>Week 1 (1–9 Aug)</span><span><b>0</b> transactions</span></div><div class="wk-row"><span>Week 2 (10–16 Aug)</span><span><b>1</b> transactions</span></div><div class="wk-row"><span>Week 3 (17–23 Aug)</span><span><b>1</b> transactions</span></div><div class="wk-row"><span>Week 4 (24–30 Aug)</span><span><b>0</b> transactions</span></div><div class="wk-row"><span>Week 5 (31 Aug–6 Sep)</span><span><b>1</b> transactions</span></div><div class="wk-row"><span>Week 6 (7–13 Sep)</span><span><b>1</b> transactions</span></div><div class="wk-row"><span>Week 7 (14–20 Sep)</span><span><b>0</b> transactions</span></div><div class="wk-row"><span>Week 8 (21–27 Sep)</span><span><b>1</b> transactions</span></div><div class="wk-row"><span>Week 9 (28–30 Sep)</span><span><b>1</b> transactions</span></div></div></div></div>
+  <div class="section-title">📋 Campaign results</div>
+  <div class="rec-list"><ul>
+    <li><b>71 transactions against a target of 60 (118%); all four sites passed their final target.</b></li>
+    <li><b>Partner Site A had the highest pace (127%); Vitamin C Shot was the best seller across sites (28).</b></li>
+    <li><b>Mood Booster sold only 2 units, so it is dropped from the next offer.</b></li>
+    <li><b>3 transactions were entered without the promo discount; a short cashier checklist is added before the next launch.</b></li>
+  </ul></div>
+  <div class="footnote">ℹ️ <b>What is "Pace"?</b> Pace = actual transactions divided by the number expected by that day, pro-rated from the final target. Pace ≥100% = on or ahead of schedule, &lt;60% = needs attention.</div>
+  <footer>Shows services and sites only, never patient names.</footer>
+</div>
+</body>
+</html>
